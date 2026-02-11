@@ -11,14 +11,12 @@ permissions:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: windows-latest
             target: node22-win-x64
             suffix: win-x64.exe
-          - os: windows-latest
-            target: node22-win-arm64
-            suffix: win-arm64.exe
           - os: macos-latest
             target: node22-macos-x64
             suffix: macos-x64
