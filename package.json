@@ -1,15 +1,15 @@
 {
-  "name": "openclaw-setup",
-  "version": "1.1.0",
+  "name": "openclaw-manager",
+  "version": "1.2.0",
   "type": "module",
-  "description": "One-click OpenClaw installer with EvoLink integration",
+  "description": "OpenClaw multi-instance manager with EvoLink integration",
   "bin": {
-    "openclaw-setup": "./bin/setup.js"
+    "openclaw-manager": "./bin/setup.js"
   },
   "scripts": {
     "start": "node bin/setup.js",
     "build": "node scripts/build.js",
-    "package": "pkg dist/setup.cjs --targets node22-win-x64,node22-macos-x64,node22-macos-arm64,node22-linux-x64 --output dist/openclaw-setup --compress GZip"
+    "package": "pkg dist/setup.cjs --targets node22-win-x64,node22-macos-x64,node22-macos-arm64,node22-linux-x64 --output dist/openclaw-manager --compress GZip"
   },
   "dependencies": {
     "express": "^5.1.0"

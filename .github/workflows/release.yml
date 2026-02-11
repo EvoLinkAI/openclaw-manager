@@ -50,34 +50,33 @@ jobs:
         run: npm run build
 
       - name: Package binary
-        run: npx pkg dist/setup.cjs --targets ${{ matrix.target }} --output "dist/openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}" --compress GZip
+        run: npx pkg dist/setup.cjs --targets ${{ matrix.target }} --output "dist/openclaw-manager-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}" --compress GZip
 
       - name: Create DMG (macOS only)
         if: runner.os == 'macOS'
         shell: bash
         run: |
           VERSION="${{ steps.version.outputs.VERSION }}"
-          BINARY="dist/openclaw-setup-${VERSION}-${{ matrix.suffix }}"
-          DMG="dist/openclaw-setup-${VERSION}-${{ matrix.suffix }}.dmg"
+          BINARY="dist/openclaw-manager-${VERSION}-${{ matrix.suffix }}"
+          DMG="dist/openclaw-manager-${VERSION}-${{ matrix.suffix }}.dmg"
           chmod +x "$BINARY"
-          # Create a temporary directory for DMG contents
           mkdir -p dmg-contents
-          cp "$BINARY" "dmg-contents/OpenClaw Setup"
-          hdiutil create -volname "OpenClaw Setup ${VERSION}" -srcfolder dmg-contents -ov -format UDZO "$DMG"
+          cp "$BINARY" "dmg-contents/OpenClaw Manager"
+          hdiutil create -volname "OpenClaw Manager ${VERSION}" -srcfolder dmg-contents -ov -format UDZO "$DMG"
           rm -rf dmg-contents
 
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}
-          path: dist/openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}
+          name: openclaw-manager-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}
+          path: dist/openclaw-manager-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}
 
       - name: Upload DMG artifact (macOS only)
         if: runner.os == 'macOS'
         uses: actions/upload-artifact@v4
         with:
-          name: openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}.dmg
-          path: dist/openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}.dmg
+          name: openclaw-manager-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}.dmg
+          path: dist/openclaw-manager-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}.dmg
 
   release:
     needs: build

@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenClaw Setup</title>
+<title>OpenClaw Manager</title>
+
+<!--SERVER_STATE-->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -29,10 +31,9 @@
     box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   }
 
-  /* Brand */
   .brand {
     text-align: center;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
   }
   .brand-name {
     font-size: 48px;
@@ -50,124 +51,75 @@
     text-transform: uppercase;
   }
 
-  /* Steps */
-  .steps {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 40px;
-  }
-  .step-num {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    border: 2px solid #e4e4e7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 600;
-    color: #a1a1aa;
-    transition: all 0.5s ease;
-  }
-  .step-num.active {
-    border-color: #09090b;
-    color: #09090b;
-  }
-  .step-num.done {
-    border-color: #09090b;
-    background: #09090b;
-    color: #fff;
-    font-weight: 700;
-  }
-  .step-line {
-    width: 80px; height: 2px;
-    background: #e4e4e7;
-    transition: background 0.5s ease;
-  }
-  .step-line.done { background: #09090b; }
-
-  /* Panels */
   .panel { display: none; }
-  .panel.active {
-    display: block;
-    animation: fadeIn 0.4s ease;
-  }
+  .panel.active { display: block; }
+
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  .panel.active { animation: fadeIn 0.3s ease; }
 
-  /* Form */
-  .field {
-    margin-bottom: 32px;
-    padding: 20px;
+  .profile-card {
+    padding: 18px 20px;
     background: #fafafa;
     border: 1px solid #f0f0f2;
     border-radius: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-
-  label {
-    display: block;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #09090b;
-    margin-bottom: 14px;
+  .profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-
-  input {
-    width: 100%;
-    padding: 16px 18px;
-    background: #f9f9fb;
-    border: 1.5px solid #e4e4e7;
-    border-radius: 10px;
-    color: #09090b;
-    font-size: 18px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  .profile-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
   }
-  input:focus {
-    border-color: #09090b;
-    box-shadow: 0 0 0 3px rgba(9,9,11,0.08);
-    background: #fff;
-  }
-  input::placeholder { color: #d4d4d8; }
-
-  .field-hint {
-    font-size: 14px;
-    color: #a1a1aa;
-    margin-top: 12px;
-  }
-  .field-hint a {
-    color: #09090b;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 1.5px;
+  .profile-dot.running { background: #22c55e; }
+  .profile-dot.stopped { background: #ef4444; }
+  .profile-name {
+    font-size: 16px;
     font-weight: 600;
-    transition: all 0.2s;
+    color: #09090b;
   }
-  .field-hint a:hover {
-    text-decoration-thickness: 2.5px;
+  .profile-port {
+    font-size: 13px;
+    color: #a1a1aa;
+    margin-left: 4px;
+  }
+  .profile-actions button {
+    width: auto;
+    padding: 8px 16px;
+    font-size: 13px;
+    margin-top: 0;
+    border-radius: 8px;
   }
 
-  /* Button */
+  .empty-state {
+    text-align: center;
+    padding: 32px 0;
+    color: #a1a1aa;
+    font-size: 15px;
+  }
+
   button {
     width: 100%;
-    padding: 18px;
+    padding: 16px;
     background: #09090b;
     color: #fff;
     border: none;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
     letter-spacing: 0.5px;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-top: 24px;
+    margin-top: 16px;
     box-shadow: 0 2px 8px rgba(9,9,11,0.18);
   }
   button:hover {
@@ -181,78 +133,8 @@
     color: #a1a1aa;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
   }
-
-  /* Status */
-  .status {
-    text-align: center;
-    margin-top: 28px;
-    font-size: 15px;
-    min-height: 20px;
-    font-weight: 500;
-  }
-  .status.error { color: #dc2626; }
-  .status.success { color: #09090b; }
-  .status.loading { color: #71717a; }
-
-  /* Done */
-  .done-box {
-    text-align: center;
-    margin-top: 48px;
-    padding: 56px 32px;
-    border: 2px solid #e4e4e7;
-    border-radius: 16px;
-    display: none;
-  }
-  .done-box .check {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    border: 3px solid #09090b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 28px;
-    font-size: 32px;
-    color: #09090b;
-  }
-  .done-box h3 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #09090b;
-    margin-bottom: 10px;
-    letter-spacing: -0.5px;
-  }
-  .done-box p {
-    font-size: 15px;
-    color: #71717a;
-    line-height: 1.7;
-  }
-
-  /* Manager panel */
-  .manager-status {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-  .manager-status .indicator {
-    display: inline-block;
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
-  }
-  .manager-status .indicator.running { background: #22c55e; }
-  .manager-status .indicator.stopped { background: #ef4444; }
-  .manager-status .label {
-    font-size: 16px;
-    font-weight: 600;
-    color: #09090b;
-    vertical-align: middle;
-  }
-  .btn-row {
-    display: flex;
-    gap: 12px;
-  }
-  .btn-row button { flex: 1; }
   button.outline {
     background: #fff;
     color: #09090b;
@@ -263,13 +145,119 @@
     background: #fafafa;
     box-shadow: none;
   }
+  button.sm {
+    padding: 8px 16px;
+    font-size: 13px;
+    margin-top: 0;
+    width: auto;
+  }
+  button.danger {
+    background: #ef4444;
+  }
+  button.danger:hover {
+    background: #dc2626;
+  }
 
-  /* Loading */
+  .field {
+    margin-bottom: 24px;
+    padding: 18px;
+    background: #fafafa;
+    border: 1px solid #f0f0f2;
+    border-radius: 14px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #09090b;
+    margin-bottom: 10px;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #f9f9fb;
+    border: 1.5px solid #e4e4e7;
+    border-radius: 10px;
+    color: #09090b;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  input:focus {
+    border-color: #09090b;
+    box-shadow: 0 0 0 3px rgba(9,9,11,0.08);
+    background: #fff;
+  }
+  input::placeholder { color: #d4d4d8; }
+
+  .field-hint {
+    font-size: 13px;
+    color: #a1a1aa;
+    margin-top: 10px;
+  }
+  .field-hint a {
+    color: #09090b;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+    font-weight: 600;
+  }
+
+  .status {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    min-height: 18px;
+    font-weight: 500;
+  }
+  .status.error { color: #dc2626; }
+  .status.success { color: #09090b; }
+  .status.loading { color: #71717a; }
+
   @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
   }
   .status.loading { animation: pulse 1.5s ease-in-out infinite; }
+
+  .back-link {
+    display: inline-block;
+    font-size: 14px;
+    color: #a1a1aa;
+    cursor: pointer;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .back-link:hover { color: #09090b; }
+
+  .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 2px solid #e4e4e7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #a1a1aa;
+    transition: all 0.4s ease;
+  }
+  .step-num.active { border-color: #09090b; color: #09090b; }
+  .step-num.done { border-color: #09090b; background: #09090b; color: #fff; }
+  .step-line { width: 60px; height: 2px; background: #e4e4e7; transition: background 0.4s ease; }
+  .step-line.done { background: #09090b; }
 </style>
 </head>
 <body>
@@ -280,15 +268,26 @@
     <div class="brand-sub">Powered by EvoLink</div>
   </div>
 
-  <div class="steps">
-    <div class="step-num active" id="dot1">1</div>
-    <div class="step-line" id="line1"></div>
-    <div class="step-num" id="dot2">2</div>
+  <!-- Home: profile list -->
+  <div class="panel" id="home">
+    <div id="profileList"></div>
+    <button type="button" id="addBtn">+ New Instance</button>
   </div>
 
-  <!-- Step 1 -->
-  <div class="panel active" id="step1">
+  <!-- Setup Step 1 -->
+  <div class="panel" id="setupStep1">
+    <span class="back-link" id="backHome">&larr; Back</span>
+    <div class="steps">
+      <div class="step-num active" id="s1dot1">1</div>
+      <div class="step-line" id="s1line"></div>
+      <div class="step-num" id="s1dot2">2</div>
+    </div>
     <form id="installForm">
+      <div class="field">
+        <label>Profile Name</label>
+        <input type="text" id="profileName" placeholder="default" autocomplete="off">
+        <div class="field-hint">Unique name for this instance</div>
+      </div>
       <div class="field">
         <label>EvoLink API Key</label>
         <input type="password" id="apiKey" placeholder="sk-..." required autocomplete="off">
@@ -297,15 +296,20 @@
       <div class="field">
         <label>Telegram Bot Token</label>
         <input type="text" id="botToken" placeholder="123456789:ABCdef..." required autocomplete="off">
-        <div class="field-hint">Create a bot via <a href="https://t.me/BotFather" target="_blank">@BotFather</a> on Telegram</div>
+        <div class="field-hint">Create a bot via <a href="https://t.me/BotFather" target="_blank">@BotFather</a></div>
       </div>
       <button type="submit" id="installBtn">Deploy</button>
     </form>
     <div class="status" id="installStatus"></div>
   </div>
 
-  <!-- Step 2 -->
-  <div class="panel" id="step2">
+  <!-- Setup Step 2 -->
+  <div class="panel" id="setupStep2">
+    <div class="steps">
+      <div class="step-num done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-num active">2</div>
+    </div>
     <form id="connectForm">
       <div class="field">
         <label>Your Telegram User ID</label>
@@ -315,177 +319,190 @@
       <button type="submit" id="connectBtn">Connect</button>
     </form>
     <div class="status" id="connectStatus"></div>
-    <div class="done-box" id="doneBox">
-      <div class="check">&#10003;</div>
-      <h3>You're all set</h3>
-      <p>Open Telegram and send a message to your bot.</p>
-      <button type="button" id="startBtn" style="margin-top: 24px;">Start Gateway</button>
-      <div class="status" id="startStatus"></div>
-    </div>
-  </div>
-  <!-- Manager (shown when already installed) -->
-  <div class="panel" id="manager">
-    <div class="manager-status">
-      <span class="indicator stopped" id="gwIndicator"></span>
-      <span class="label" id="gwLabel">Checking...</span>
-    </div>
-    <div class="btn-row">
-      <button type="button" id="gwStartBtn">Start Gateway</button>
-      <button type="button" id="gwStopBtn" class="outline">Stop Gateway</button>
-    </div>
-    <div class="status" id="gwStatus"></div>
   </div>
 </div>
 
 <script>
-const $ = id => document.getElementById(id);
+var currentProfile = "default";
 
-// Check if already installed — show manager instead of setup
-(async () => {
-  try {
-    const res = await fetch("/status");
-    const { installed, gateway } = await res.json();
-    if (installed) {
-      // Hide setup UI, show manager
-      document.querySelector(".steps").style.display = "none";
-      $("step1").classList.remove("active");
-      $("manager").classList.add("active");
-      updateGatewayUI(gateway);
-    }
-  } catch {}
-})();
+var STATE = window.__STATE__ || { profiles: [] };
 
-function updateGatewayUI(status) {
-  const running = status === "running";
-  $("gwIndicator").className = "indicator " + (running ? "running" : "stopped");
-  $("gwLabel").textContent = running ? "Gateway is running" : "Gateway is stopped";
-  $("gwStartBtn").disabled = running;
-  $("gwStopBtn").disabled = !running;
+function $(id) { return document.getElementById(id); }
+
+function showPanel(id) {
+  var panels = document.querySelectorAll(".panel");
+  for (var i = 0; i < panels.length; i++) panels[i].classList.remove("active");
+  $(id).classList.add("active");
 }
 
-$("installForm").addEventListener("submit", async (e) => {
+function renderProfiles(profiles) {
+  var list = $("profileList");
+  if (!profiles || profiles.length === 0) {
+    list.innerHTML = '<div class="empty-state">No instances yet. Click below to create one.</div>';
+    return;
+  }
+  var html = "";
+  for (var i = 0; i < profiles.length; i++) {
+    var p = profiles[i];
+    var running = p.gateway === "running";
+    html += '<div class="profile-card">';
+    html += '<div class="profile-info">';
+    html += '<span class="profile-dot ' + (running ? "running" : "stopped") + '"></span>';
+    html += '<span class="profile-name">' + p.profile + '</span>';
+    html += '<span class="profile-port">:' + p.port + '</span>';
+    html += '</div>';
+    html += '<div class="profile-actions">';
+    if (running) {
+      html += '<button class="sm danger" onclick="doStop(\'' + p.profile + '\',this)">Stop</button>';
+    } else {
+      html += '<button class="sm" onclick="doStart(\'' + p.profile + '\',this)">Start</button>';
+    }
+    html += '</div>';
+    html += '</div>';
+  }
+  list.innerHTML = html;
+}
+
+function refreshProfiles(cb) {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "/profiles");
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      var profiles = JSON.parse(xhr.responseText);
+      renderProfiles(profiles);
+    }
+    if (cb) cb();
+  };
+  xhr.onerror = function() { if (cb) cb(); };
+  xhr.send();
+}
+
+function doStart(profile, btn) {
+  btn.disabled = true;
+  btn.textContent = "Starting...";
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/start-gateway");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function() { setTimeout(function() { refreshProfiles(); }, 2000); };
+  xhr.onerror = function() { refreshProfiles(); };
+  xhr.send(JSON.stringify({ profile: profile }));
+}
+
+function doStop(profile, btn) {
+  btn.disabled = true;
+  btn.textContent = "Stopping...";
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/stop-gateway");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function() { setTimeout(function() { refreshProfiles(); }, 2000); };
+  xhr.onerror = function() { refreshProfiles(); };
+  xhr.send(JSON.stringify({ profile: profile }));
+}
+
+// Init
+renderProfiles(STATE.profiles);
+showPanel("home");
+
+// Auto-refresh every 5s when home is visible
+var pollTimer = null;
+function startPolling() {
+  stopPolling();
+  pollTimer = setInterval(function() {
+    if ($("home").classList.contains("active")) refreshProfiles();
+  }, 5000);
+}
+function stopPolling() {
+  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+}
+startPolling();
+
+$("addBtn").addEventListener("click", function() {
+  showPanel("setupStep1");
+  $("profileName").value = "";
+  $("apiKey").value = "";
+  $("botToken").value = "";
+  $("installStatus").textContent = "";
+  $("installBtn").disabled = false;
+});
+
+$("backHome").addEventListener("click", function() {
+  refreshProfiles(function() {
+    showPanel("home");
+  });
+});
+
+$("installForm").addEventListener("submit", function(e) {
   e.preventDefault();
-  const apiKey = $("apiKey").value.trim();
-  const botToken = $("botToken").value.trim();
+  var profile = $("profileName").value.trim() || "default";
+  var apiKey = $("apiKey").value.trim();
+  var botToken = $("botToken").value.trim();
+  currentProfile = profile;
 
   $("installBtn").disabled = true;
   $("installStatus").className = "status loading";
   $("installStatus").textContent = "Deploying...";
 
-  try {
-    const res = await fetch("/setup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ apiKey, botToken }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Deploy failed");
-
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/setup");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function() {
+    var data = JSON.parse(xhr.responseText);
+    if (xhr.status >= 400) {
+      $("installStatus").className = "status error";
+      $("installStatus").textContent = data.error || "Deploy failed";
+      $("installBtn").disabled = false;
+      return;
+    }
     $("installStatus").className = "status success";
     $("installStatus").textContent = "Deployed";
-
-    setTimeout(() => {
-      $("step1").classList.remove("active");
-      $("step2").classList.add("active");
-      $("dot1").classList.replace("active", "done");
-      $("dot1").textContent = "\u2713";
-      $("line1").classList.add("done");
-      $("dot2").classList.add("active");
-    }, 800);
-  } catch (err) {
+    setTimeout(function() {
+      $("connectStatus").textContent = "";
+      $("connectBtn").disabled = false;
+      $("telegramId").value = "";
+      showPanel("setupStep2");
+    }, 600);
+  };
+  xhr.onerror = function() {
     $("installStatus").className = "status error";
-    $("installStatus").textContent = err.message;
+    $("installStatus").textContent = "Network error";
     $("installBtn").disabled = false;
-  }
+  };
+  xhr.send(JSON.stringify({ profile: profile, apiKey: apiKey, botToken: botToken }));
 });
 
-$("connectForm").addEventListener("submit", async (e) => {
+$("connectForm").addEventListener("submit", function(e) {
   e.preventDefault();
-  const telegramId = $("telegramId").value.trim();
+  var telegramId = $("telegramId").value.trim();
 
   $("connectBtn").disabled = true;
   $("connectStatus").className = "status loading";
   $("connectStatus").textContent = "Connecting...";
 
-  try {
-    const res = await fetch("/connect", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ telegramId }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Failed");
-
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/connect");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function() {
+    var data = JSON.parse(xhr.responseText);
+    if (xhr.status >= 400) {
+      $("connectStatus").className = "status error";
+      $("connectStatus").textContent = data.error || "Failed";
+      $("connectBtn").disabled = false;
+      return;
+    }
     $("connectStatus").className = "status success";
-    $("connectStatus").textContent = "";
-    $("connectForm").style.display = "none";
-    $("doneBox").style.display = "block";
-    $("dot2").classList.replace("active", "done");
-    $("dot2").textContent = "\u2713";
-  } catch (err) {
+    $("connectStatus").textContent = "Connected";
+    setTimeout(function() {
+      refreshProfiles(function() {
+        showPanel("home");
+      });
+    }, 3000);
+  };
+  xhr.onerror = function() {
     $("connectStatus").className = "status error";
-    $("connectStatus").textContent = err.message;
+    $("connectStatus").textContent = "Network error";
     $("connectBtn").disabled = false;
-  }
-});
-
-$("startBtn").addEventListener("click", async () => {
-  $("startBtn").disabled = true;
-  $("startStatus").className = "status loading";
-  $("startStatus").textContent = "Starting...";
-
-  try {
-    const res = await fetch("/start-gateway", { method: "POST" });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Failed");
-
-    $("startStatus").className = "status success";
-    $("startStatus").textContent = "Gateway is running";
-    $("startBtn").textContent = "Running";
-
-    setTimeout(() => fetch("/shutdown", { method: "POST" }).catch(() => {}), 2000);
-  } catch (err) {
-    $("startStatus").className = "status error";
-    $("startStatus").textContent = err.message;
-    $("startBtn").disabled = false;
-  }
-});
-
-// Manager buttons
-$("gwStartBtn").addEventListener("click", async () => {
-  $("gwStartBtn").disabled = true;
-  $("gwStatus").className = "status loading";
-  $("gwStatus").textContent = "Starting...";
-  try {
-    const res = await fetch("/start-gateway", { method: "POST" });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Failed");
-    $("gwStatus").className = "status success";
-    $("gwStatus").textContent = "";
-    updateGatewayUI("running");
-  } catch (err) {
-    $("gwStatus").className = "status error";
-    $("gwStatus").textContent = err.message;
-    $("gwStartBtn").disabled = false;
-  }
-});
-
-$("gwStopBtn").addEventListener("click", async () => {
-  $("gwStopBtn").disabled = true;
-  $("gwStatus").className = "status loading";
-  $("gwStatus").textContent = "Stopping...";
-  try {
-    const res = await fetch("/stop-gateway", { method: "POST" });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "Failed");
-    $("gwStatus").className = "status success";
-    $("gwStatus").textContent = "";
-    updateGatewayUI("stopped");
-  } catch (err) {
-    $("gwStatus").className = "status error";
-    $("gwStatus").textContent = err.message;
-    $("gwStopBtn").disabled = false;
-  }
+  };
+  xhr.send(JSON.stringify({ profile: currentProfile, telegramId: telegramId }));
 });
 </script>
 </body>
