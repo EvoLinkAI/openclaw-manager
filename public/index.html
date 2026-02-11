@@ -283,6 +283,8 @@
       <div class="check">&#10003;</div>
       <h3>You're all set</h3>
       <p>Open Telegram and send a message to your bot.</p>
+      <button type="button" id="startBtn" style="margin-top: 24px;">Start Gateway</button>
+      <div class="status" id="startStatus"></div>
     </div>
   </div>
 </div>
@@ -349,12 +351,32 @@ $("connectForm").addEventListener("submit", async (e) => {
     $("doneBox").style.display = "block";
     $("dot2").classList.replace("active", "done");
     $("dot2").textContent = "\u2713";
-
-    setTimeout(() => fetch("/shutdown", { method: "POST" }).catch(() => {}), 3000);
   } catch (err) {
     $("connectStatus").className = "status error";
     $("connectStatus").textContent = err.message;
     $("connectBtn").disabled = false;
+  }
+});
+
+$("startBtn").addEventListener("click", async () => {
+  $("startBtn").disabled = true;
+  $("startStatus").className = "status loading";
+  $("startStatus").textContent = "Starting...";
+
+  try {
+    const res = await fetch("/start-gateway", { method: "POST" });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Failed");
+
+    $("startStatus").className = "status success";
+    $("startStatus").textContent = "Gateway is running";
+    $("startBtn").textContent = "Running";
+
+    setTimeout(() => fetch("/shutdown", { method: "POST" }).catch(() => {}), 2000);
+  } catch (err) {
+    $("startStatus").className = "status error";
+    $("startStatus").textContent = err.message;
+    $("startBtn").disabled = false;
   }
 });
 </script>
