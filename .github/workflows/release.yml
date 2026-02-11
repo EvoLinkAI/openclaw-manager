@@ -15,20 +15,25 @@ jobs:
         include:
           - os: windows-latest
             target: node22-win-x64
-            output: openclaw-setup-win-x64.exe
+            suffix: win-x64.exe
           - os: macos-latest
             target: node22-macos-x64
-            output: openclaw-setup-macos-x64
+            suffix: macos-x64
           - os: macos-latest
             target: node22-macos-arm64
-            output: openclaw-setup-macos-arm64
+            suffix: macos-arm64
           - os: ubuntu-latest
             target: node22-linux-x64
-            output: openclaw-setup-linux-x64
+            suffix: linux-x64
 
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: version
+        shell: bash
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
       - uses: actions/setup-node@v4
         with:
@@ -41,13 +46,13 @@ jobs:
         run: npm run build
 
       - name: Package binary
-        run: npx pkg dist/setup.cjs --targets ${{ matrix.target }} --output dist/${{ matrix.output }} --compress GZip
+        run: npx pkg dist/setup.cjs --targets ${{ matrix.target }} --output "dist/openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}" --compress GZip
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.output }}
-          path: dist/${{ matrix.output }}
+          name: openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}
+          path: dist/openclaw-setup-${{ steps.version.outputs.VERSION }}-${{ matrix.suffix }}
 
   release:
     needs: build
