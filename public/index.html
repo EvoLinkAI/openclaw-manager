@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OpenClaw Manager</title>
-
 <!--SERVER_STATE-->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -60,6 +59,7 @@
   }
   .panel.active { animation: fadeIn 0.3s ease; }
 
+  /* Profile cards */
   .profile-card {
     padding: 18px 20px;
     background: #fafafa;
@@ -91,13 +91,6 @@
     color: #a1a1aa;
     margin-left: 4px;
   }
-  .profile-actions button {
-    width: auto;
-    padding: 8px 16px;
-    font-size: 13px;
-    margin-top: 0;
-    border-radius: 8px;
-  }
 
   .empty-state {
     text-align: center;
@@ -106,6 +99,7 @@
     font-size: 15px;
   }
 
+  /* Buttons */
   button {
     width: 100%;
     padding: 16px;
@@ -135,29 +129,16 @@
     transform: none;
     box-shadow: none;
   }
-  button.outline {
-    background: #fff;
-    color: #09090b;
-    border: 1.5px solid #e4e4e7;
-    box-shadow: none;
-  }
-  button.outline:hover {
-    background: #fafafa;
-    box-shadow: none;
-  }
   button.sm {
     padding: 8px 16px;
     font-size: 13px;
     margin-top: 0;
     width: auto;
   }
-  button.danger {
-    background: #ef4444;
-  }
-  button.danger:hover {
-    background: #dc2626;
-  }
+  button.danger { background: #ef4444; }
+  button.danger:hover { background: #dc2626; }
 
+  /* Fields */
   .field {
     margin-bottom: 24px;
     padding: 18px;
@@ -176,7 +157,7 @@
     margin-bottom: 10px;
   }
 
-  input {
+  input, select {
     width: 100%;
     padding: 14px 16px;
     background: #f9f9fb;
@@ -188,8 +169,9 @@
     font-weight: 400;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    -webkit-appearance: none;
   }
-  input:focus {
+  input:focus, select:focus {
     border-color: #09090b;
     box-shadow: 0 0 0 3px rgba(9,9,11,0.08);
     background: #fff;
@@ -209,23 +191,7 @@
     font-weight: 600;
   }
 
-  .status {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 14px;
-    min-height: 18px;
-    font-weight: 500;
-  }
-  .status.error { color: #dc2626; }
-  .status.success { color: #09090b; }
-  .status.loading { color: #71717a; }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-  .status.loading { animation: pulse 1.5s ease-in-out infinite; }
-
+  /* Steps indicator */
   .back-link {
     display: inline-block;
     font-size: 14px;
@@ -258,6 +224,45 @@
   .step-num.done { border-color: #09090b; background: #09090b; color: #fff; }
   .step-line { width: 60px; height: 2px; background: #e4e4e7; transition: background 0.4s ease; }
   .step-line.done { background: #09090b; }
+
+  /* Progress bar */
+  .progress-wrap {
+    margin-top: 28px;
+    display: none;
+  }
+  .progress-wrap.active { display: block; }
+  .progress-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: #f0f0f2;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #09090b;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+  .progress-bar-fill.error { background: #ef4444; }
+  .progress-msg {
+    font-size: 13px;
+    color: #71717a;
+    margin-top: 10px;
+    min-height: 18px;
+    animation: breathe 2.5s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  .progress-pct {
+    font-size: 13px;
+    font-weight: 600;
+    color: #09090b;
+    margin-top: 6px;
+  }
 </style>
 </head>
 <body>
@@ -274,58 +279,95 @@
     <button type="button" id="addBtn">+ New Instance</button>
   </div>
 
-  <!-- Setup Step 1 -->
-  <div class="panel" id="setupStep1">
+  <!-- Step 1: Instance config -->
+  <div class="panel" id="step1">
     <span class="back-link" id="backHome">&larr; Back</span>
     <div class="steps">
-      <div class="step-num active" id="s1dot1">1</div>
-      <div class="step-line" id="s1line"></div>
-      <div class="step-num" id="s1dot2">2</div>
+      <div class="step-num active">1</div>
+      <div class="step-line"></div>
+      <div class="step-num">2</div>
+      <div class="step-line"></div>
+      <div class="step-num">3</div>
     </div>
-    <form id="installForm">
+    <form id="step1Form">
       <div class="field">
-        <label>Profile Name</label>
+        <label>Instance Name</label>
         <input type="text" id="profileName" placeholder="default" autocomplete="off">
         <div class="field-hint">Unique name for this instance</div>
       </div>
+      <div class="field">
+        <label>Model</label>
+        <select id="modelSelect"></select>
+      </div>
+      <div class="field">
+        <label>Channel</label>
+        <select id="channelSelect">
+          <option value="telegram">Telegram</option>
+        </select>
+      </div>
+      <button type="submit">Next</button>
+    </form>
+  </div>
+
+  <!-- Step 2: Deploy -->
+  <div class="panel" id="step2">
+    <div class="steps">
+      <div class="step-num done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-num active">2</div>
+      <div class="step-line"></div>
+      <div class="step-num">3</div>
+    </div>
+    <form id="step2Form">
       <div class="field">
         <label>EvoLink API Key</label>
         <input type="password" id="apiKey" placeholder="sk-..." required autocomplete="off">
         <div class="field-hint">Get your key at <a href="https://evolink.ai" target="_blank">evolink.ai</a></div>
       </div>
-      <div class="field">
+      <div class="field" id="telegramTokenField">
         <label>Telegram Bot Token</label>
         <input type="text" id="botToken" placeholder="123456789:ABCdef..." required autocomplete="off">
         <div class="field-hint">Create a bot via <a href="https://t.me/BotFather" target="_blank">@BotFather</a></div>
       </div>
-      <button type="submit" id="installBtn">Deploy</button>
+      <button type="submit" id="deployBtn">Deploy</button>
     </form>
-    <div class="status" id="installStatus"></div>
+    <div class="progress-wrap" id="deployProgress">
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="deployFill"></div></div>
+      <div class="progress-pct" id="deployPct"></div>
+      <div class="progress-msg" id="deployMsg"></div>
+    </div>
   </div>
 
-  <!-- Setup Step 2 -->
-  <div class="panel" id="setupStep2">
+  <!-- Step 3: Connect -->
+  <div class="panel" id="step3">
     <div class="steps">
       <div class="step-num done">&#10003;</div>
       <div class="step-line done"></div>
-      <div class="step-num active">2</div>
+      <div class="step-num done">&#10003;</div>
+      <div class="step-line done"></div>
+      <div class="step-num active">3</div>
     </div>
-    <form id="connectForm">
-      <div class="field">
+    <form id="step3Form">
+      <div class="field" id="telegramIdField">
         <label>Your Telegram User ID</label>
         <input type="text" id="telegramId" placeholder="123456789" required autocomplete="off">
         <div class="field-hint">Send /start to <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> to get your ID</div>
       </div>
       <button type="submit" id="connectBtn">Connect</button>
     </form>
-    <div class="status" id="connectStatus"></div>
+    <div class="progress-wrap" id="connectProgress">
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="connectFill"></div></div>
+      <div class="progress-pct" id="connectPct"></div>
+      <div class="progress-msg" id="connectMsg"></div>
+    </div>
   </div>
 </div>
 
 <script>
+var STATE = window.__STATE__ || { profiles: [], models: [] };
 var currentProfile = "default";
-
-var STATE = window.__STATE__ || { profiles: [] };
+var currentChannel = "telegram";
+var currentModel = "";
 
 function $(id) { return document.getElementById(id); }
 
@@ -333,6 +375,20 @@ function showPanel(id) {
   var panels = document.querySelectorAll(".panel");
   for (var i = 0; i < panels.length; i++) panels[i].classList.remove("active");
   $(id).classList.add("active");
+}
+
+// Populate model dropdown
+function initModels() {
+  var sel = $("modelSelect");
+  sel.innerHTML = "";
+  var models = STATE.models || [];
+  for (var i = 0; i < models.length; i++) {
+    var opt = document.createElement("option");
+    opt.value = models[i].id;
+    opt.textContent = models[i].name;
+    sel.appendChild(opt);
+  }
+  if (models.length > 0) sel.value = models[models.length - 1].id;
 }
 
 function renderProfiles(profiles) {
@@ -400,6 +456,7 @@ function doStop(profile, btn) {
 }
 
 // Init
+initModels();
 renderProfiles(STATE.profiles);
 showPanel("home");
 
@@ -409,100 +466,168 @@ function startPolling() {
   stopPolling();
   pollTimer = setInterval(function() {
     if ($("home").classList.contains("active")) refreshProfiles();
-  }, 5000);
+  }, 3000);
 }
 function stopPolling() {
   if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
 }
 startPolling();
 
+// --- Navigation ---
 $("addBtn").addEventListener("click", function() {
-  showPanel("setupStep1");
   $("profileName").value = "";
-  $("apiKey").value = "";
-  $("botToken").value = "";
-  $("installStatus").textContent = "";
-  $("installBtn").disabled = false;
+  showPanel("step1");
 });
 
 $("backHome").addEventListener("click", function() {
-  refreshProfiles(function() {
-    showPanel("home");
-  });
+  refreshProfiles(function() { showPanel("home"); });
 });
 
-$("installForm").addEventListener("submit", function(e) {
+// --- Step 1: Next ---
+$("step1Form").addEventListener("submit", function(e) {
   e.preventDefault();
-  var profile = $("profileName").value.trim() || "default";
+  currentProfile = $("profileName").value.trim() || "default";
+  currentModel = $("modelSelect").value;
+  currentChannel = $("channelSelect").value;
+
+  // Reset step 2
+  $("apiKey").value = "";
+  $("botToken").value = "";
+  $("deployBtn").disabled = false;
+  $("deployProgress").classList.remove("active");
+  $("deployFill").style.width = "0%";
+  $("deployFill").classList.remove("error");
+  $("deployPct").textContent = "";
+  $("deployMsg").textContent = "";
+  $("step2Form").style.display = "";
+
+  // Show/hide channel-specific fields
+  $("telegramTokenField").style.display = currentChannel === "telegram" ? "" : "none";
+
+  showPanel("step2");
+});
+
+// --- Step 2: Deploy with SSE progress ---
+$("step2Form").addEventListener("submit", function(e) {
+  e.preventDefault();
   var apiKey = $("apiKey").value.trim();
   var botToken = $("botToken").value.trim();
-  currentProfile = profile;
 
-  $("installBtn").disabled = true;
-  $("installStatus").className = "status loading";
-  $("installStatus").textContent = "Deploying...";
+  if (!apiKey) return;
+  if (currentChannel === "telegram" && !botToken) return;
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/setup");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function() {
-    var data = JSON.parse(xhr.responseText);
-    if (xhr.status >= 400) {
-      $("installStatus").className = "status error";
-      $("installStatus").textContent = data.error || "Deploy failed";
-      $("installBtn").disabled = false;
+  $("deployBtn").disabled = true;
+  $("deployProgress").classList.add("active");
+  $("deployFill").style.width = "0%";
+  $("deployFill").classList.remove("error");
+  $("deployPct").textContent = "0%";
+  $("deployMsg").textContent = "Starting...";
+
+  var params = "profile=" + encodeURIComponent(currentProfile)
+    + "&apiKey=" + encodeURIComponent(apiKey)
+    + "&model=" + encodeURIComponent(currentModel)
+    + "&channel=" + encodeURIComponent(currentChannel);
+
+  if (currentChannel === "telegram") {
+    params += "&botToken=" + encodeURIComponent(botToken);
+  }
+
+  var es = new EventSource("/setup-stream?" + params);
+  es.onmessage = function(ev) {
+    var d = JSON.parse(ev.data);
+    if (d.error) {
+      $("deployFill").style.width = "100%";
+      $("deployFill").classList.add("error");
+      $("deployPct").textContent = "Error";
+      $("deployMsg").textContent = d.message;
+      $("deployBtn").disabled = false;
+      es.close();
       return;
     }
-    $("installStatus").className = "status success";
-    $("installStatus").textContent = "Deployed";
-    setTimeout(function() {
-      $("connectStatus").textContent = "";
-      $("connectBtn").disabled = false;
-      $("telegramId").value = "";
-      showPanel("setupStep2");
-    }, 600);
+    $("deployFill").style.width = d.percent + "%";
+    $("deployPct").textContent = d.percent + "%";
+    $("deployMsg").textContent = d.message;
+    if (d.done) {
+      es.close();
+      $("step2Form").style.display = "none";
+      setTimeout(function() {
+        // Reset step 3
+        $("telegramId").value = "";
+        $("connectBtn").disabled = false;
+        $("connectProgress").classList.remove("active");
+        $("connectFill").style.width = "0%";
+        $("connectFill").classList.remove("error");
+        $("connectPct").textContent = "";
+        $("connectMsg").textContent = "";
+        $("step3Form").style.display = "";
+
+        $("telegramIdField").style.display = currentChannel === "telegram" ? "" : "none";
+        showPanel("step3");
+      }, 800);
+    }
   };
-  xhr.onerror = function() {
-    $("installStatus").className = "status error";
-    $("installStatus").textContent = "Network error";
-    $("installBtn").disabled = false;
+  es.onerror = function() {
+    $("deployFill").style.width = "100%";
+    $("deployFill").classList.add("error");
+    $("deployPct").textContent = "Error";
+    $("deployMsg").textContent = "Connection lost";
+    $("deployBtn").disabled = false;
+    es.close();
   };
-  xhr.send(JSON.stringify({ profile: profile, apiKey: apiKey, botToken: botToken }));
 });
 
-$("connectForm").addEventListener("submit", function(e) {
+// --- Step 3: Connect with SSE progress ---
+$("step3Form").addEventListener("submit", function(e) {
   e.preventDefault();
   var telegramId = $("telegramId").value.trim();
 
-  $("connectBtn").disabled = true;
-  $("connectStatus").className = "status loading";
-  $("connectStatus").textContent = "Connecting...";
+  if (currentChannel === "telegram" && !telegramId) return;
 
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "/connect");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function() {
-    var data = JSON.parse(xhr.responseText);
-    if (xhr.status >= 400) {
-      $("connectStatus").className = "status error";
-      $("connectStatus").textContent = data.error || "Failed";
+  $("connectBtn").disabled = true;
+  $("connectProgress").classList.add("active");
+  $("connectFill").style.width = "0%";
+  $("connectFill").classList.remove("error");
+  $("connectPct").textContent = "0%";
+  $("connectMsg").textContent = "Starting...";
+
+  var params = "profile=" + encodeURIComponent(currentProfile)
+    + "&channel=" + encodeURIComponent(currentChannel);
+
+  if (currentChannel === "telegram") {
+    params += "&telegramId=" + encodeURIComponent(telegramId);
+  }
+
+  var es = new EventSource("/connect-stream?" + params);
+  es.onmessage = function(ev) {
+    var d = JSON.parse(ev.data);
+    if (d.error) {
+      $("connectFill").style.width = "100%";
+      $("connectFill").classList.add("error");
+      $("connectPct").textContent = "Error";
+      $("connectMsg").textContent = d.message;
       $("connectBtn").disabled = false;
+      es.close();
       return;
     }
-    $("connectStatus").className = "status success";
-    $("connectStatus").textContent = "Connected";
-    setTimeout(function() {
-      refreshProfiles(function() {
-        showPanel("home");
-      });
-    }, 3000);
+    $("connectFill").style.width = d.percent + "%";
+    $("connectPct").textContent = d.percent + "%";
+    $("connectMsg").textContent = d.message;
+    if (d.done) {
+      es.close();
+      $("step3Form").style.display = "none";
+      setTimeout(function() {
+        refreshProfiles(function() { showPanel("home"); });
+      }, 1200);
+    }
   };
-  xhr.onerror = function() {
-    $("connectStatus").className = "status error";
-    $("connectStatus").textContent = "Network error";
+  es.onerror = function() {
+    $("connectFill").style.width = "100%";
+    $("connectFill").classList.add("error");
+    $("connectPct").textContent = "Error";
+    $("connectMsg").textContent = "Connection lost";
     $("connectBtn").disabled = false;
+    es.close();
   };
-  xhr.send(JSON.stringify({ profile: currentProfile, telegramId: telegramId }));
 });
 </script>
 </body>
