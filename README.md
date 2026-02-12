@@ -14,7 +14,7 @@ Visual manager for [OpenClaw](https://github.com/nicepkg/openclaw) — create, c
 
 ## Quick Start
 
-Download the latest executable from [Releases](https://github.com/Pharmacist9527/openclaw-installer/releases), run it, and follow the 3-step wizard.
+Download the latest executable from [Releases](https://github.com/Pharmacist9527/openclaw-manager/releases), run it, and follow the 3-step wizard.
 
 ## Build from Source
 
@@ -26,7 +26,7 @@ npx pkg dist/setup.cjs --targets node22-win-x64 --output dist/openclaw-manager -
 
 ## Powered by
 
-[EvoLink](https://evolink.ai) — Zero-cost Claude API access
+[EvoLink](https://evolink.ai) — Unified AI API gateway with 40+ models, smart routing, and lower cost
 
 ## License
 
