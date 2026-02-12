@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OpenClaw Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"></noscript>
 <!--SERVER_STATE-->
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
@@ -387,6 +389,12 @@ var currentModel = "";
 
 function $(id) { return document.getElementById(id); }
 
+function esc(s) {
+  var d = document.createElement("div");
+  d.textContent = s;
+  return d.innerHTML;
+}
+
 function showPanel(id) {
   var panels = document.querySelectorAll(".panel");
   for (var i = 0; i < panels.length; i++) panels[i].classList.remove("active");
@@ -417,26 +425,28 @@ function renderProfiles(profiles) {
   for (var i = 0; i < profiles.length; i++) {
     var p = profiles[i];
     var running = p.gateway === "running";
+    var safeName = esc(p.profile);
+    var attrName = esc(p.profile).replace(/'/g, "&#39;");
     html += '<div class="profile-card">';
     html += '<div class="profile-info">';
     html += '<span class="profile-dot ' + (running ? "running" : "stopped") + '"></span>';
     html += '<div>';
-    html += '<span class="profile-name">' + p.profile + '</span>';
+    html += '<span class="profile-name">' + safeName + '</span>';
     html += '<span class="profile-port">:' + p.port + '</span>';
     html += '<div style="font-size:12px;color:#a1a1aa;margin-top:4px">';
-    if (p.model) html += p.model;
+    if (p.model) html += esc(p.model);
     if (p.model && p.channel) html += ' · ';
-    if (p.channel) html += p.channel;
+    if (p.channel) html += esc(p.channel);
     html += '</div>';
     html += '</div>';
     html += '</div>';
     html += '<div class="profile-actions">';
     if (running) {
-      html += '<button class="sm danger" onclick="doStop(\'' + p.profile + '\',this)">Stop</button>';
+      html += '<button class="sm danger" onclick="doStop(\'' + attrName + '\',this)">Stop</button>';
     } else {
-      html += '<button class="sm" onclick="doStart(\'' + p.profile + '\',this)">Start</button>';
+      html += '<button class="sm" onclick="doStart(\'' + attrName + '\',this)">Start</button>';
     }
-    html += ' <button class="sm danger" onclick="doDelete(\'' + p.profile + '\',this)" style="margin-left:6px">Delete</button>';
+    html += ' <button class="sm danger" onclick="doDelete(\'' + attrName + '\',this)" style="margin-left:6px">Delete</button>';
     html += '</div>';
     html += '</div>';
   }
@@ -464,8 +474,13 @@ function doStart(profile, btn) {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/start-gateway");
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function() { setTimeout(function() { refreshProfiles(); }, 2000); };
-  xhr.onerror = function() { refreshProfiles(); };
+  xhr.onload = function() {
+    if (xhr.status !== 200) {
+      try { alert("Start failed: " + JSON.parse(xhr.responseText).error); } catch(e) { alert("Start failed"); }
+    }
+    setTimeout(function() { refreshProfiles(); }, 2000);
+  };
+  xhr.onerror = function() { alert("Network error"); refreshProfiles(); };
   xhr.send(JSON.stringify({ profile: profile }));
 }
 
@@ -475,8 +490,13 @@ function doStop(profile, btn) {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/stop-gateway");
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function() { setTimeout(function() { refreshProfiles(); }, 2000); };
-  xhr.onerror = function() { refreshProfiles(); };
+  xhr.onload = function() {
+    if (xhr.status !== 200) {
+      try { alert("Stop failed: " + JSON.parse(xhr.responseText).error); } catch(e) { alert("Stop failed"); }
+    }
+    setTimeout(function() { refreshProfiles(); }, 2000);
+  };
+  xhr.onerror = function() { alert("Network error"); refreshProfiles(); };
   xhr.send(JSON.stringify({ profile: profile }));
 }
 
@@ -487,8 +507,13 @@ function doDelete(profile, btn) {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/delete-profile");
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onload = function() { refreshProfiles(); };
-  xhr.onerror = function() { refreshProfiles(); };
+  xhr.onload = function() {
+    if (xhr.status !== 200) {
+      try { alert("Delete failed: " + JSON.parse(xhr.responseText).error); } catch(e) { alert("Delete failed"); }
+    }
+    refreshProfiles();
+  };
+  xhr.onerror = function() { alert("Network error"); refreshProfiles(); };
   xhr.send(JSON.stringify({ profile: profile }));
 }
 
@@ -497,7 +522,7 @@ initModels();
 renderProfiles(STATE.profiles);
 showPanel("home");
 
-// Auto-refresh every 5s when home is visible
+// Auto-refresh every 3s when home is visible
 var pollTimer = null;
 function startPolling() {
   stopPolling();
@@ -524,6 +549,19 @@ $("backHome").addEventListener("click", function() {
 $("step1Form").addEventListener("submit", function(e) {
   e.preventDefault();
   currentProfile = $("profileName").value.trim() || "default";
+
+  // Validate profile name
+  if (currentProfile !== "default") {
+    if (currentProfile.length > 32) {
+      alert("Instance name too long (max 32 characters).");
+      return;
+    }
+    if (!/^[a-zA-Z0-9_-]+$/.test(currentProfile)) {
+      alert("Instance name can only contain letters, numbers, hyphens and underscores.");
+      return;
+    }
+  }
+
   currentModel = $("modelSelect").value;
   currentChannel = $("channelSelect").value;
 
