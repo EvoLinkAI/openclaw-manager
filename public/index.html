@@ -633,9 +633,19 @@ $("step2Form").addEventListener("submit", function(e) {
   };
 });
 
-// --- Step 3: Skip ---
+// --- Step 3: Done (restart gateway to apply config cleanly) ---
 $("skipBtn").addEventListener("click", function() {
-  refreshProfiles(function() { showPanel("home"); });
+  $("skipBtn").disabled = true;
+  $("skipBtn").textContent = "Restarting...";
+  fetch("/restart-gateway", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ profile: currentProfile })
+  }).finally(function() {
+    $("skipBtn").disabled = false;
+    $("skipBtn").textContent = "Done";
+    refreshProfiles(function() { showPanel("home"); });
+  });
 });
 
 // --- Step 3: Connect with SSE progress ---
