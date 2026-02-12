@@ -303,6 +303,7 @@
         <label>Channel</label>
         <select id="channelSelect">
           <option value="telegram">Telegram</option>
+          <option value="feishu">Feishu</option>
         </select>
       </div>
       <button type="submit">Next</button>
@@ -326,8 +327,17 @@
       </div>
       <div class="field" id="telegramTokenField">
         <label>Telegram Bot Token</label>
-        <input type="text" id="botToken" placeholder="123456789:ABCdef..." required autocomplete="off">
+        <input type="text" id="botToken" placeholder="123456789:ABCdef..." autocomplete="off">
         <div class="field-hint">Create a bot via <a href="https://t.me/BotFather" target="_blank">@BotFather</a></div>
+      </div>
+      <div class="field" id="feishuAppIdField" style="display:none">
+        <label>Feishu App ID</label>
+        <input type="text" id="feishuAppId" placeholder="cli_xxx" autocomplete="off">
+        <div class="field-hint">From <a href="https://open.feishu.cn/app" target="_blank">Feishu Open Platform</a></div>
+      </div>
+      <div class="field" id="feishuAppSecretField" style="display:none">
+        <label>Feishu App Secret</label>
+        <input type="password" id="feishuAppSecret" placeholder="App Secret" autocomplete="off">
       </div>
       <button type="submit" id="deployBtn">Deploy</button>
     </form>
@@ -350,10 +360,16 @@
     <form id="step3Form">
       <div class="field" id="telegramIdField">
         <label>Your Telegram User ID</label>
-        <input type="text" id="telegramId" placeholder="123456789" required autocomplete="off">
+        <input type="text" id="telegramId" placeholder="123456789" autocomplete="off">
         <div class="field-hint">Send /start to <a href="https://t.me/userinfobot" target="_blank">@userinfobot</a> to get your ID</div>
       </div>
+      <div id="feishuDoneField" style="display:none;text-align:center;padding:24px 0;color:#09090b;font-size:15px;line-height:1.8;">
+        Deploy complete.<br>
+        Go to <a href="https://open.feishu.cn/app" target="_blank" style="color:#09090b;font-weight:600;text-decoration:underline">Feishu Open Platform</a> &rarr; Event Subscriptions &rarr; select "Receive events via WebSocket" &rarr; click Save.<br>
+        Then send a message to the bot to start chatting.
+      </div>
       <button type="submit" id="connectBtn">Connect</button>
+      <button type="button" id="skipBtn" class="outline" style="display:none">Done</button>
     </form>
     <div class="progress-wrap" id="connectProgress">
       <div class="progress-bar-bg"><div class="progress-bar-fill" id="connectFill"></div></div>
@@ -404,8 +420,15 @@ function renderProfiles(profiles) {
     html += '<div class="profile-card">';
     html += '<div class="profile-info">';
     html += '<span class="profile-dot ' + (running ? "running" : "stopped") + '"></span>';
+    html += '<div>';
     html += '<span class="profile-name">' + p.profile + '</span>';
     html += '<span class="profile-port">:' + p.port + '</span>';
+    html += '<div style="font-size:12px;color:#a1a1aa;margin-top:4px">';
+    if (p.model) html += p.model;
+    if (p.model && p.channel) html += ' · ';
+    if (p.channel) html += p.channel;
+    html += '</div>';
+    html += '</div>';
     html += '</div>';
     html += '<div class="profile-actions">';
     if (running) {
@@ -413,6 +436,7 @@ function renderProfiles(profiles) {
     } else {
       html += '<button class="sm" onclick="doStart(\'' + p.profile + '\',this)">Start</button>';
     }
+    html += ' <button class="sm danger" onclick="doDelete(\'' + p.profile + '\',this)" style="margin-left:6px">Delete</button>';
     html += '</div>';
     html += '</div>';
   }
@@ -425,6 +449,7 @@ function refreshProfiles(cb) {
   xhr.onload = function() {
     if (xhr.status === 200) {
       var profiles = JSON.parse(xhr.responseText);
+      STATE.profiles = profiles;
       renderProfiles(profiles);
     }
     if (cb) cb();
@@ -451,6 +476,18 @@ function doStop(profile, btn) {
   xhr.open("POST", "/stop-gateway");
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.onload = function() { setTimeout(function() { refreshProfiles(); }, 2000); };
+  xhr.onerror = function() { refreshProfiles(); };
+  xhr.send(JSON.stringify({ profile: profile }));
+}
+
+function doDelete(profile, btn) {
+  if (!confirm("Delete instance \"" + profile + "\"? This will stop the gateway and remove all configuration.")) return;
+  btn.disabled = true;
+  btn.textContent = "Deleting...";
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/delete-profile");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function() { refreshProfiles(); };
   xhr.onerror = function() { refreshProfiles(); };
   xhr.send(JSON.stringify({ profile: profile }));
 }
@@ -490,6 +527,15 @@ $("step1Form").addEventListener("submit", function(e) {
   currentModel = $("modelSelect").value;
   currentChannel = $("channelSelect").value;
 
+  // Check if profile already exists
+  var existing = STATE.profiles || [];
+  for (var i = 0; i < existing.length; i++) {
+    if (existing[i].profile === currentProfile) {
+      alert("Instance \"" + currentProfile + "\" already exists. Choose a different name.");
+      return;
+    }
+  }
+
   // Reset step 2
   $("apiKey").value = "";
   $("botToken").value = "";
@@ -503,6 +549,8 @@ $("step1Form").addEventListener("submit", function(e) {
 
   // Show/hide channel-specific fields
   $("telegramTokenField").style.display = currentChannel === "telegram" ? "" : "none";
+  $("feishuAppIdField").style.display = currentChannel === "feishu" ? "" : "none";
+  $("feishuAppSecretField").style.display = currentChannel === "feishu" ? "" : "none";
 
   showPanel("step2");
 });
@@ -512,9 +560,12 @@ $("step2Form").addEventListener("submit", function(e) {
   e.preventDefault();
   var apiKey = $("apiKey").value.trim();
   var botToken = $("botToken").value.trim();
+  var appId = $("feishuAppId").value.trim();
+  var appSecret = $("feishuAppSecret").value.trim();
 
   if (!apiKey) return;
   if (currentChannel === "telegram" && !botToken) return;
+  if (currentChannel === "feishu" && (!appId || !appSecret)) return;
 
   $("deployBtn").disabled = true;
   $("deployProgress").classList.add("active");
@@ -530,6 +581,9 @@ $("step2Form").addEventListener("submit", function(e) {
 
   if (currentChannel === "telegram") {
     params += "&botToken=" + encodeURIComponent(botToken);
+  } else if (currentChannel === "feishu") {
+    params += "&appId=" + encodeURIComponent(appId);
+    params += "&appSecret=" + encodeURIComponent(appSecret);
   }
 
   var es = new EventSource("/setup-stream?" + params);
@@ -562,6 +616,9 @@ $("step2Form").addEventListener("submit", function(e) {
         $("step3Form").style.display = "";
 
         $("telegramIdField").style.display = currentChannel === "telegram" ? "" : "none";
+        $("feishuDoneField").style.display = currentChannel === "feishu" ? "" : "none";
+        $("connectBtn").style.display = currentChannel === "telegram" ? "" : "none";
+        $("skipBtn").style.display = currentChannel === "feishu" ? "" : "none";
         showPanel("step3");
       }, 800);
     }
@@ -574,6 +631,11 @@ $("step2Form").addEventListener("submit", function(e) {
     $("deployBtn").disabled = false;
     es.close();
   };
+});
+
+// --- Step 3: Skip ---
+$("skipBtn").addEventListener("click", function() {
+  refreshProfiles(function() { showPanel("home"); });
 });
 
 // --- Step 3: Connect with SSE progress ---
