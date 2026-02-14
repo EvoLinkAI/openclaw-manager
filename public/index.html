@@ -412,7 +412,7 @@ function initModels() {
     opt.textContent = models[i].name;
     sel.appendChild(opt);
   }
-  if (models.length > 0) sel.value = models[models.length - 1].id;
+  if (models.length > 0) sel.value = models[0].id;
 }
 
 function renderProfiles(profiles) {
