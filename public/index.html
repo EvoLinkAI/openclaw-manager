@@ -275,6 +275,16 @@
     <div class="brand-sub">Powered by EvoLink</div>
   </div>
 
+  <!-- Login panel (server mode) -->
+  <div class="panel" id="login">
+    <div class="field">
+      <label>ACCESS TOKEN</label>
+      <input type="password" id="tokenInput" placeholder="Paste token from terminal" autocomplete="off">
+    </div>
+    <div id="loginError" style="color:#ef4444;font-size:13px;text-align:center;min-height:20px;margin-bottom:8px"></div>
+    <button type="button" id="loginBtn">Unlock</button>
+  </div>
+
   <!-- Home: profile list -->
   <div class="panel" id="home">
     <div id="profileList"></div>
@@ -382,7 +392,7 @@
 </div>
 
 <script>
-var STATE = window.__STATE__ || { profiles: [], models: [] };
+var STATE = window.__STATE__ || {};
 var currentProfile = "default";
 var currentChannel = "telegram";
 var currentModel = "";
@@ -595,9 +605,19 @@ function openModelModal(profile, currentModelId) {
 }
 
 // Init
-initModels();
-renderProfiles(STATE.profiles);
-showPanel("home");
+function init() {
+  initModels();
+  if (STATE.profiles !== undefined) {
+    // __STATE__ injected → authenticated or local mode
+    renderProfiles(STATE.profiles);
+    showPanel("home");
+    startPolling();
+  } else {
+    // No __STATE__ → need login
+    showPanel("login");
+  }
+}
+init();
 
 // Auto-refresh every 3s when home is visible
 var pollTimer = null;
@@ -610,7 +630,37 @@ function startPolling() {
 function stopPolling() {
   if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
 }
-startPolling();
+
+// --- Login ---
+$("loginBtn").addEventListener("click", function() {
+  var token = $("tokenInput").value.trim();
+  if (!token) return;
+  $("loginBtn").disabled = true;
+  $("loginError").textContent = "";
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/auth/login");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      location.reload();
+    } else if (xhr.status === 429) {
+      $("loginError").textContent = "Too many attempts. Try again later.";
+      $("loginBtn").disabled = false;
+    } else {
+      $("loginError").textContent = "Invalid token";
+      $("loginBtn").disabled = false;
+    }
+  };
+  xhr.onerror = function() {
+    $("loginError").textContent = "Network error";
+    $("loginBtn").disabled = false;
+  };
+  xhr.send(JSON.stringify({ token: token }));
+});
+
+$("tokenInput").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") $("loginBtn").click();
+});
 
 // --- Navigation ---
 $("addBtn").addEventListener("click", function() {
@@ -689,63 +739,75 @@ $("step2Form").addEventListener("submit", function(e) {
   $("deployPct").textContent = "0%";
   $("deployMsg").textContent = "Starting...";
 
-  var params = "profile=" + encodeURIComponent(currentProfile)
-    + "&apiKey=" + encodeURIComponent(apiKey)
-    + "&model=" + encodeURIComponent(currentModel)
-    + "&channel=" + encodeURIComponent(currentChannel);
+  var payload = {
+    profile: currentProfile,
+    apiKey: apiKey,
+    model: currentModel,
+    channel: currentChannel
+  };
+  if (currentChannel === "telegram") payload.botToken = botToken;
+  else if (currentChannel === "feishu") { payload.appId = appId; payload.appSecret = appSecret; }
 
-  if (currentChannel === "telegram") {
-    params += "&botToken=" + encodeURIComponent(botToken);
-  } else if (currentChannel === "feishu") {
-    params += "&appId=" + encodeURIComponent(appId);
-    params += "&appSecret=" + encodeURIComponent(appSecret);
-  }
-
-  var es = new EventSource("/setup-stream?" + params);
-  es.onmessage = function(ev) {
-    var d = JSON.parse(ev.data);
-    if (d.error) {
+  var pxhr = new XMLHttpRequest();
+  pxhr.open("POST", "/setup/prepare");
+  pxhr.setRequestHeader("Content-Type", "application/json");
+  pxhr.onload = function() {
+    if (pxhr.status !== 200) {
       $("deployFill").style.width = "100%";
       $("deployFill").classList.add("error");
       $("deployPct").textContent = "Error";
-      $("deployMsg").textContent = d.message;
+      $("deployMsg").textContent = "Failed to prepare deployment";
       $("deployBtn").disabled = false;
-      es.close();
       return;
     }
-    $("deployFill").style.width = d.percent + "%";
-    $("deployPct").textContent = d.percent + "%";
-    $("deployMsg").textContent = d.message;
-    if (d.done) {
-      es.close();
-      $("step2Form").style.display = "none";
-      setTimeout(function() {
-        // Reset step 3
-        $("telegramId").value = "";
-        $("connectBtn").disabled = false;
-        $("connectProgress").classList.remove("active");
-        $("connectFill").style.width = "0%";
-        $("connectFill").classList.remove("error");
-        $("connectPct").textContent = "";
-        $("connectMsg").textContent = "";
-        $("step3Form").style.display = "";
+    var ticket = JSON.parse(pxhr.responseText).ticket;
+    var es = new EventSource("/setup-stream?ticket=" + encodeURIComponent(ticket));
+    es.onmessage = function(ev) {
+      var d = JSON.parse(ev.data);
+      if (d.error) {
+        $("deployFill").style.width = "100%";
+        $("deployFill").classList.add("error");
+        $("deployPct").textContent = "Error";
+        $("deployMsg").textContent = d.message;
+        $("deployBtn").disabled = false;
+        es.close();
+        return;
+      }
+      $("deployFill").style.width = d.percent + "%";
+      $("deployPct").textContent = d.percent + "%";
+      $("deployMsg").textContent = d.message;
+      if (d.done) {
+        es.close();
+        $("step2Form").style.display = "none";
+        setTimeout(function() {
+          // Reset step 3
+          $("telegramId").value = "";
+          $("connectBtn").disabled = false;
+          $("connectProgress").classList.remove("active");
+          $("connectFill").style.width = "0%";
+          $("connectFill").classList.remove("error");
+          $("connectPct").textContent = "";
+          $("connectMsg").textContent = "";
+          $("step3Form").style.display = "";
 
-        $("telegramIdField").style.display = currentChannel === "telegram" ? "" : "none";
-        $("feishuDoneField").style.display = currentChannel === "feishu" ? "" : "none";
-        $("connectBtn").style.display = currentChannel === "telegram" ? "" : "none";
-        $("skipBtn").style.display = currentChannel === "feishu" ? "" : "none";
-        showPanel("step3");
-      }, 800);
-    }
+          $("telegramIdField").style.display = currentChannel === "telegram" ? "" : "none";
+          $("feishuDoneField").style.display = currentChannel === "feishu" ? "" : "none";
+          $("connectBtn").style.display = currentChannel === "telegram" ? "" : "none";
+          $("skipBtn").style.display = currentChannel === "feishu" ? "" : "none";
+          showPanel("step3");
+        }, 800);
+      }
+    };
+    es.onerror = function() {
+      $("deployFill").style.width = "100%";
+      $("deployFill").classList.add("error");
+      $("deployPct").textContent = "Error";
+      $("deployMsg").textContent = "Connection lost";
+      $("deployBtn").disabled = false;
+      es.close();
+    };
   };
-  es.onerror = function() {
-    $("deployFill").style.width = "100%";
-    $("deployFill").classList.add("error");
-    $("deployPct").textContent = "Error";
-    $("deployMsg").textContent = "Connection lost";
-    $("deployBtn").disabled = false;
-    es.close();
-  };
+  pxhr.send(JSON.stringify(payload));
 });
 
 // --- Step 3: Done (restart gateway to apply config cleanly) ---
@@ -777,44 +839,58 @@ $("step3Form").addEventListener("submit", function(e) {
   $("connectPct").textContent = "0%";
   $("connectMsg").textContent = "Starting...";
 
-  var params = "profile=" + encodeURIComponent(currentProfile)
-    + "&channel=" + encodeURIComponent(currentChannel);
+  var payload = {
+    profile: currentProfile,
+    channel: currentChannel
+  };
+  if (currentChannel === "telegram") payload.telegramId = telegramId;
 
-  if (currentChannel === "telegram") {
-    params += "&telegramId=" + encodeURIComponent(telegramId);
-  }
-
-  var es = new EventSource("/connect-stream?" + params);
-  es.onmessage = function(ev) {
-    var d = JSON.parse(ev.data);
-    if (d.error) {
+  var pxhr = new XMLHttpRequest();
+  pxhr.open("POST", "/connect/prepare");
+  pxhr.setRequestHeader("Content-Type", "application/json");
+  pxhr.onload = function() {
+    if (pxhr.status !== 200) {
       $("connectFill").style.width = "100%";
       $("connectFill").classList.add("error");
       $("connectPct").textContent = "Error";
-      $("connectMsg").textContent = d.message;
+      $("connectMsg").textContent = "Failed to prepare connection";
       $("connectBtn").disabled = false;
-      es.close();
       return;
     }
-    $("connectFill").style.width = d.percent + "%";
-    $("connectPct").textContent = d.percent + "%";
-    $("connectMsg").textContent = d.message;
-    if (d.done) {
+    var ticket = JSON.parse(pxhr.responseText).ticket;
+    var es = new EventSource("/connect-stream?ticket=" + encodeURIComponent(ticket));
+    es.onmessage = function(ev) {
+      var d = JSON.parse(ev.data);
+      if (d.error) {
+        $("connectFill").style.width = "100%";
+        $("connectFill").classList.add("error");
+        $("connectPct").textContent = "Error";
+        $("connectMsg").textContent = d.message;
+        $("connectBtn").disabled = false;
+        es.close();
+        return;
+      }
+      $("connectFill").style.width = d.percent + "%";
+      $("connectPct").textContent = d.percent + "%";
+      $("connectMsg").textContent = d.message;
+      if (d.done) {
+        es.close();
+        $("step3Form").style.display = "none";
+        setTimeout(function() {
+          refreshProfiles(function() { showPanel("home"); });
+        }, 1200);
+      }
+    };
+    es.onerror = function() {
+      $("connectFill").style.width = "100%";
+      $("connectFill").classList.add("error");
+      $("connectPct").textContent = "Error";
+      $("connectMsg").textContent = "Connection lost";
+      $("connectBtn").disabled = false;
       es.close();
-      $("step3Form").style.display = "none";
-      setTimeout(function() {
-        refreshProfiles(function() { showPanel("home"); });
-      }, 1200);
-    }
+    };
   };
-  es.onerror = function() {
-    $("connectFill").style.width = "100%";
-    $("connectFill").classList.add("error");
-    $("connectPct").textContent = "Error";
-    $("connectMsg").textContent = "Connection lost";
-    $("connectBtn").disabled = false;
-    es.close();
-  };
+  pxhr.send(JSON.stringify(payload));
 });
 </script>
 </body>
