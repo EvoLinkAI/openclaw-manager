@@ -1,19 +1,19 @@
-# OpenClaw Manager — OpenClaw mit einem Klick installieren und verwalten
+# OpenClaw Manager
 
 <p align="center">
-  <strong>Installieren Sie OpenClaw und verbinden Sie Telegram oder Feishu mit einem geführten Assistenten.</strong><br>
-  Nutzen Sie Claude über EvoLink und sparen Sie ~30% — berechnen Sie Ihre Ersparnis in Sekunden.
+  <strong>OpenClaw mit einem Klick lokal bereitstellen — dein persönlicher KI-Agent, auf deinem Rechner.</strong>
 </p>
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">Website</a> •
-  <a href="https://evolink.ai/openclaw">Downloads</a> •
-  <a href="#geführte-einrichtung">Einrichtungsanleitung</a> •
+  <a href="https://evolink.ai/openclaw">Download</a> •
+  <a href="#einrichtungsanleitung">Anleitung</a> •
+  <a href="#unterstützte-kanäle">Kanäle</a> •
   <a href="#modelle">Modelle</a>
 </p>
 
 <p align="center">
-  <strong>🌐 Languages / Sprachen：</strong>
+  <strong>🌐 Languages：</strong>
   <a href="README.md">English</a> |
   <a href="README.zh-CN.md">简体中文</a> |
   <a href="README.zh-TW.md">繁體中文</a> |
@@ -28,86 +28,112 @@
 
 ---
 
-## Warum OpenClaw Manager?
+## Was ist OpenClaw Manager?
 
-| | |
-|---|---|
-| ✅ **~30% Rabatt auf Claude API** | Offizielle Preise über EvoLink (zeitlich begrenzt) |
-| ✅ **Kein Terminal nötig** | Zugangsdaten kopieren & einfügen, Deploy klicken |
-| ✅ **End-to-End-Verifizierung** | Bestätigen Sie, dass Ihr Kanal funktioniert, bevor Sie beginnen |
-| ✅ **Multi-Instanz** | Mehrere OpenClaw-Bots parallel betreiben |
-| ✅ **Plattformübergreifend** | macOS, Windows, Linux |
+**OpenClaw Manager** ist eine Desktop-App, die [OpenClaw](https://github.com/openclaw/openclaw) mit einem Klick lokal bereitstellt. Kein Terminal, kein Docker, keine manuellen Konfigurationsdateien.
 
-## Schnellstart
+OpenClaw ist ein KI-Agenten-Framework, das einen Claude-gesteuerten KI-Assistenten mit deinen Messaging-Apps verbindet. Es kann Dateien lesen, im Web surfen, Code ausführen, Kalender verwalten und Alltagsaufgaben automatisieren — alles durch natürliche Konversation.
 
-1. Neueste ausführbare Datei **herunterladen**: [Releases](https://evolink.ai/openclaw)
-2. **Ausführen** — keine Installation erforderlich
-3. Dem 3-Schritte-Assistenten **folgen**
+**OpenClaw Manager macht die Einrichtung trivial:** Herunterladen, zwei Zugangsdaten eingeben, Deploy klicken. Fertig.
 
 ---
 
-## Geführte Einrichtung
+## Was Du Brauchst
 
-Kein Terminal. Einfach Zugangsdaten kopieren & einfügen.
+Nur zwei Dinge:
+
+1. **Einen API-Schlüssel** — für das KI-Modell (bei [EvoLink](https://evolink.ai) erhältlich)
+2. **Einen Messaging-Kanal** — derzeit Telegram oder Feishu
+
+Das war's. Der Manager erledigt den Rest: OpenClaw herunterladen, Service konfigurieren, Kanal verbinden und Setup verifizieren.
+
+---
+
+## Unterstützte Kanäle
+
+| Kanal | Status | Region |
+|-------|--------|--------|
+| **Telegram** | ✅ Unterstützt | Global |
+| **Feishu (飞书)** | ✅ Unterstützt | China |
+| WhatsApp | 🔜 Demnächst | — |
+| Discord | 🔜 Demnächst | — |
+| Slack | 🔜 Demnächst | — |
+| Weitere... | 🗓️ Geplant | — |
+
+Wir erweitern aktiv die Kanalunterstützung. Beiträge und Anfragen willkommen.
+
+---
+
+## Einrichtungsanleitung
+
+Drei Schritte. Unter 5 Minuten.
 
 ### Voraussetzungen
 
-Sie benötigen folgendes vor dem Start:
+| Was | Wo Erhältlich |
+|-----|--------------|
+| **EvoLink API-Schlüssel** | [evolink.ai](https://evolink.ai) → Dashboard → API Keys |
+| **Telegram Bot Token** | Erstelle via [@BotFather](https://t.me/BotFather) |
+| **Telegram Benutzer-ID** | Sende `/start` an [@userinfobot](https://t.me/userinfobot) |
 
-| Zugangsdaten | Wie erhalten |
-|---|---|
-| **EvoLink API Key** | [EvoLink Dashboard](https://evolink.ai) → API Keys |
-| **Telegram Bot Token** | Bot über [@BotFather](https://t.me/BotFather) erstellen, Token kopieren |
-| **Telegram Benutzer-ID** | `/start` an [@userinfobot](https://t.me/userinfobot) senden |
+> 💡 Für Feishu: Wähle es in Schritt 1 aus und folge der In-App-Anleitung.
 
-> 💡 Feishu (Lark) wird ebenfalls unterstützt — wählen Sie es in Schritt 1.
+### Schritt 1 — Instanz Erstellen *(~30 Sek.)*
 
-### Schritt 1 — Instanz erstellen *(~30 Sek.)*
+Wähle ein Claude-Modell, wähle deinen Kanal (Telegram oder Feishu).  
+Du kannst mehrere Instanzen für verschiedene Teams oder Bots erstellen.
 
-Wählen Sie ein Claude-Modell, dann wählen Sie Ihren Kanal (Telegram oder Feishu).
-Sie können mehrere Instanzen für verschiedene Teams oder Bots erstellen.
+### Schritt 2 — Zugangsdaten Eingeben
 
-### Schritt 2 — Zugangsdaten eingeben
-
-Fügen Sie Ihren EvoLink API Key und die Kanal-Zugangsdaten ein.
+Füge deinen API-Schlüssel und Kanal-Zugangsdaten ein.  
 Der Assistent validiert jedes Feld vor dem Fortfahren.
 
-### Schritt 3 — Bereitstellen und verifizieren
+### Schritt 3 — Bereitstellen & Verifizieren
 
-Klicken Sie auf **Deploy**. Der Fortschritt wird in Echtzeit über SSE gestreamt.
-Nach Abschluss senden Sie eine Testnachricht, um zu bestätigen, dass alles funktioniert.
+Klicke **Deploy**. Verfolge den Fortschritt in Echtzeit.  
+Sende eine Testnachricht um zu bestätigen, dass alles funktioniert.
 
 ---
 
 ## Modelle
 
-Alle über EvoLink verfügbaren Claude-Modelle:
+Alle Claude-Modelle über EvoLink verfügbar:
 
-| Modell | Stufe |
-|---|---|
-| Claude Haiku 4.5 | Schnell & günstig |
-| Claude Sonnet 4.5 | Ausgewogen |
-| Claude Opus 4.5 | Fortgeschritten |
-| Claude Opus 4.6 | Leistungsstärkste |
+| Modell | Am Besten Für |
+|--------|--------------|
+| Claude Haiku 4.5 | Schnelle Antworten, einfache Aufgaben |
+| Claude Sonnet 4.5 | Balance aus Geschwindigkeit und Intelligenz |
+| Claude Opus 4.5 | Komplexes Reasoning |
+| Claude Opus 4.6 | Leistungsfähigstes, Langzeit-Agenten |
 
-> 🔥 **Zeitlich begrenztes Angebot**: ~30% Rabatt auf offizielle Claude-Preise über EvoLink.
-> Die Ersparnis variiert je nach Stufe, Nutzungsmuster und Kontextlänge. [Berechnen Sie Ihre Ersparnis →](https://evolink.ai/openclaw#pricing)
+---
+
+## API-Kosten Sparen
+
+Nutze Claude über [EvoLink](https://evolink.ai/openclaw) und zahle **~30% weniger** als der offizielle Preis.
+
+- Gleiche Modelle, gleiche Qualität
+- Keine Code-Änderungen nötig
+- Funktioniert sofort mit OpenClaw Manager
+
+> 🔥 Zeitlich begrenztes Angebot. [Berechne deine Ersparnis →](https://evolink.ai/openclaw#pricing)
 
 ---
 
 ## Funktionen
 
-- **Multi-Instanz-Verwaltung** — mehrere OpenClaw-Profile parallel betreiben
-- **Modellauswahl** — Haiku 4.5, Sonnet 4.5, Opus 4.5, Opus 4.6
-- **Kanalunterstützung** — Telegram und Feishu (Lark)
-- **Echtzeit-Deployment** — SSE-Streaming-Fortschritt
-- **Gateway-Steuerung** — Start / Stopp / Status mit Auto-Refresh
-- **Ein-Klick-Löschung** — Service-Bereinigung
-- **Plattformübergreifend** — Windows, macOS, Linux ausführbare Dateien
+- **Ein-Klick-Bereitstellung** — kein Terminal oder Docker nötig
+- **Multi-Instanz** — mehrere OpenClaw-Bots gleichzeitig betreiben
+- **Kanalauswahl** — Telegram und Feishu, weitere folgen
+- **Modellauswahl** — Haiku, Sonnet, Opus (4.5 & 4.6)
+- **Echtzeit-Fortschritt** — SSE-Streaming während der Bereitstellung
+- **Gateway-Steuerung** — Start / Stop / Status mit Auto-Refresh
+- **Saubere Entfernung** — ein Klick zum Löschen
+- **Plattformübergreifend** — Windows, macOS, Linux
 
 ---
 
-## Aus Quellcode bauen
+## Aus Quellcode Bauen
 
 ```bash
 npm install
@@ -131,11 +157,7 @@ npx pkg dist/setup.cjs --targets node22-linux-x64 --output dist/openclaw-manager
 
 ## Powered by
 
-<a href="https://evolink.ai">
-  <strong>EvoLink</strong>
-</a> — Vereinheitlichtes AI-API-Gateway mit 40+ Modellen, intelligentem Routing und niedrigeren Kosten.
-
----
+<a href="https://evolink.ai"><strong>EvoLink</strong></a> — Einheitliches KI-API-Gateway. 40+ Modelle, intelligentes Routing, niedrigere Kosten.
 
 ## Lizenz
 

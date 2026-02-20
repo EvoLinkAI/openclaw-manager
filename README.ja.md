@@ -1,19 +1,19 @@
-# OpenClaw Manager — ワンクリックで OpenClaw をインストール＆管理
+# OpenClaw Manager
 
 <p align="center">
-  <strong>OpenClaw をインストールし、ガイド付きウィザードで Telegram または Feishu を接続。</strong><br>
-  EvoLink 経由で Claude を利用し、約 30% 節約 — 数秒で節約額を見積もり。
+  <strong>OpenClaw をワンクリックでローカルにデプロイ — あなた専用の AI エージェントを、あなたのマシンで。</strong>
 </p>
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">ウェブサイト</a> •
   <a href="https://evolink.ai/openclaw">ダウンロード</a> •
-  <a href="#ガイド付きセットアップ">セットアップガイド</a> •
+  <a href="#セットアップガイド">ガイド</a> •
+  <a href="#対応チャネル">チャネル</a> •
   <a href="#モデル">モデル</a>
 </p>
 
 <p align="center">
-  <strong>🌐 Languages / 言語：</strong>
+  <strong>🌐 Languages：</strong>
   <a href="README.md">English</a> |
   <a href="README.zh-CN.md">简体中文</a> |
   <a href="README.zh-TW.md">繁體中文</a> |
@@ -28,82 +28,108 @@
 
 ---
 
-## なぜ OpenClaw Manager？
+## OpenClaw Manager とは？
 
-| | |
-|---|---|
-| ✅ **Claude API 約 30% オフ** | EvoLink 経由の公式価格（期間限定） |
-| ✅ **ターミナル不要** | 認証情報をコピー＆ペーストしてデプロイをクリック |
-| ✅ **エンドツーエンド検証** | 開始前にチャンネルの動作を確認 |
-| ✅ **マルチインスタンス** | 複数の OpenClaw ボットを並行実行 |
-| ✅ **クロスプラットフォーム** | macOS、Windows、Linux |
+**OpenClaw Manager** は、[OpenClaw](https://github.com/openclaw/openclaw) をワンクリックでローカルにデプロイできるデスクトップアプリです。ターミナル不要、Docker 不要、設定ファイルの手動編集不要。
 
-## クイックスタート
+OpenClaw は Claude 搭載の AI アシスタントをメッセージングアプリに接続する AI エージェントフレームワークです。ファイル読み取り、Web ブラウジング、コード実行、カレンダー管理、日常タスクの自動化 — すべて自然な会話で行えます。
 
-1. 最新の実行ファイルを**ダウンロード**：[Releases](https://evolink.ai/openclaw)
-2. **実行** — インストール不要
-3. 以下の 3 ステップウィザードに**従う**
+**OpenClaw Manager ならセットアップは簡単：** ダウンロード、2つの認証情報を入力、デプロイをクリック。完了。
 
 ---
 
-## ガイド付きセットアップ
+## 必要なもの
 
-ターミナル不要。認証情報をコピー＆ペーストするだけ。
+2つだけ：
+
+1. **API キー** — AI モデル用（[EvoLink](https://evolink.ai) で取得）
+2. **メッセージングチャネル** — 現在 Telegram または Feishu に対応
+
+それだけです。マネージャーが残りすべてを処理します：OpenClaw のダウンロード、サービスの設定、チャネルの接続、セットアップの検証。
+
+---
+
+## 対応チャネル
+
+| チャネ��� | ステータス | 地域 |
+|---------|----------|------|
+| **Telegram** | ✅ 対応済み | グローバル |
+| **Feishu（飛書）** | ✅ 対応済み | 中国 |
+| WhatsApp | 🔜 近日対応 | — |
+| Discord | 🔜 近日対応 | — |
+| Slack | 🔜 近日対応 | — |
+| その他... | 🗓️ 計画中 | — |
+
+チャネルサポートを積極的に拡大中。コントリビューションやリクエスト歓迎。
+
+---
+
+## セットアップガイド
+
+3ステップ。5分以内。
 
 ### 前提条件
 
-開始前に必要なもの：
-
-| 認証情報 | 取得方法 |
-|---|---|
-| **EvoLink API Key** | [EvoLink ダッシュボード](https://evolink.ai) → API Keys |
-| **Telegram Bot Token** | [@BotFather](https://t.me/BotFather) でボットを作成しトークンをコピー |
+| 必要なもの | 取得方法 |
+|-----------|---------|
+| **EvoLink API キー** | [evolink.ai](https://evolink.ai) → ダッシュボード → API Keys |
+| **Telegram ボットトークン** | [@BotFather](https://t.me/BotFather) で作成 |
 | **Telegram ユーザー ID** | [@userinfobot](https://t.me/userinfobot) に `/start` を送信 |
 
-> 💡 Feishu（Lark）もサポート — ステップ 1 で選択してください。
+> 💡 Feishu の場合：ステップ1で Feishu を選択し、アプリ内ガイドに従って認証情報を取得。
 
-### ステップ 1 — インスタンスの作成 *（約 30 秒）*
+### ステップ 1 — インスタンスを作成 *（約30秒）*
 
-Claude モデルを選択し、チャンネル（Telegram または Feishu）を選びます。
-異なるチームやボット用に複数のインスタンスを作成できます。
+Claude モデルを選択、チャネル（Telegram または Feishu）を選択。  
+異なるチームやボット用に複数インスタンスを作成可能。
 
-### ステップ 2 — 認証情報の入力
+### ステップ 2 — 認証情報を入力
 
-EvoLink API Key とチャンネル認証情報を貼り付けます。
-ウィザードが各フィールドを検証してから次に進みます。
+API キーとチャネルの認証情報を貼り付け。  
+ウィザードが各フィールドを検証してから次へ。
 
-### ステップ 3 — デプロイと検証
+### ステップ 3 — デプロイ＆検証
 
-**Deploy** をクリック。SSE 経由でリアルタイムに進捗が配信されます。
-完了後、テストメッセージを送信してすべてが正常に動作することを確認します。
+**デプロイ** をクリック。リアルタイムで進捗を確認。  
+テストメッセージを送信して動作を確認。
 
 ---
 
 ## モデル
 
-EvoLink 経由で利用可能なすべての Claude モデル：
+EvoLink 経由で利用可能な全 Claude モデル：
 
-| モデル | ティア |
-|---|---|
-| Claude Haiku 4.5 | 高速＆経済的 |
-| Claude Sonnet 4.5 | バランス型 |
-| Claude Opus 4.5 | 高度 |
-| Claude Opus 4.6 | 最高性能 |
+| モデル | 最適な用途 |
+|-------|----------|
+| Claude Haiku 4.5 | 高速レスポンス、シンプルなタスク |
+| Claude Sonnet 4.5 | スピードと知性のバランス |
+| Claude Opus 4.5 | 複雑な推論 |
+| Claude Opus 4.6 | 最も高性能、長時間実行エージェント |
 
-> 🔥 **期間限定オファー**：EvoLink 経由で Claude 公式価格の約 30% オフ。
-> 節約額はティア、使用パターン、コンテキスト長により異なります。[節約額を計算 →](https://evolink.ai/openclaw#pricing)
+---
+
+## API コスト削減
+
+[EvoLink](https://evolink.ai/openclaw) 経由で Claude を使用すると、**公式価格より約30%お得**。
+
+- 同じモデル、同じ品質
+- コード変更不要
+- OpenClaw Manager ですぐに使える
+
+> 🔥 期間限定オファー。[節約額を計算 →](https://evolink.ai/openclaw#pricing)
 
 ---
 
 ## 機能
 
-- **マルチインスタンス管理** — 複数の OpenClaw プロファイルを並行実行
-- **モデル選択** — Haiku 4.5、Sonnet 4.5、Opus 4.5、Opus 4.6
-- **チャンネルサポート** — Telegram と Feishu（Lark）
-- **リアルタイムデプロイ** — SSE ストリーミング進捗
+- **ワンクリックデプロイ** — ターミナルや Docker 不要
+- **マルチインスタンス** — 複数の OpenClaw ボットを同時実行
+- **チャネル選択** — Telegram と Feishu、他も追加予定
+- **モデル選択** — Haiku、Sonnet、Opus（4.5 & 4.6）
+- **リアルタイム進捗** — デプロイ中の SSE ストリーミング
 - **ゲートウェイ制御** — 起動 / 停止 / ステータス自動更新
-- **ワンクリック削除** — サービスのクリーンアップ
-- **クロスプラットフォーム** — Windows、macOS、Linux 実行ファイル
+- **クリーン削除** — ワンクリックで完全削除
+- **クロスプラットフォーム** — Windows、macOS、Linux
 
 ---
 
@@ -131,11 +157,7 @@ npx pkg dist/setup.cjs --targets node22-linux-x64 --output dist/openclaw-manager
 
 ## Powered by
 
-<a href="https://evolink.ai">
-  <strong>EvoLink</strong>
-</a> — 40 以上のモデルを備えた統一 AI API ゲートウェイ、スマートルーティング、低コスト。
-
----
+<a href="https://evolink.ai"><strong>EvoLink</strong></a> — 統合 AI API ゲートウェイ。40以上のモデル、スマートルーティング、低コスト。
 
 ## ライセンス
 

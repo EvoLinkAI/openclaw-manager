@@ -1,19 +1,19 @@
-# OpenClaw Manager — 一键安装和管理 OpenClaw
+# OpenClaw Manager
 
 <p align="center">
-  <strong>安装 OpenClaw 并通过引导向导连接 Telegram 或飞书。</strong><br>
-  通过 EvoLink 使用 Claude，节省约 30% 费用 — 秒级估算节省金额。
+  <strong>一键本地部署 OpenClaw — 你的个人 AI 代理，运行在你的电脑上。</strong>
 </p>
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">官网</a> •
   <a href="https://evolink.ai/openclaw">下载</a> •
-  <a href="#引导安装">安装指南</a> •
+  <a href="#安装指南">安装指南</a> •
+  <a href="#支持的通讯渠道">渠道</a> •
   <a href="#模型">模型</a>
 </p>
 
 <p align="center">
-  <strong>🌐 Languages / 语言：</strong>
+  <strong>🌐 Languages：</strong>
   <a href="README.md">English</a> |
   <a href="README.zh-CN.md">简体中文</a> |
   <a href="README.zh-TW.md">繁體中文</a> |
@@ -28,54 +28,70 @@
 
 ---
 
-## 为什么选择 OpenClaw Manager？
+## 什么是 OpenClaw Manager？
 
-| | |
-|---|---|
-| ✅ **Claude API 约 7 折** | 通过 EvoLink 的官方定价（限时优惠） |
-| ✅ **无需终端** | 复制粘贴凭据，点击部署 |
-| ✅ **端到端验证** | 启动前确认频道正常工作 |
-| ✅ **多实例管理** | 同时运行多个 OpenClaw 机器人 |
-| ✅ **跨平台** | macOS、Windows、Linux |
+**OpenClaw Manager** 是一款桌面应用，让你一键在本地部署 [OpenClaw](https://github.com/openclaw/openclaw)。无需终端、无需 Docker、无需手动编辑配置文件。
 
-## 快速开始
+OpenClaw 是一个 AI 代理框架，将 Claude 驱动的 AI 助手连接到你的通讯工具。它能读取文件、浏览网页、运行代码、管理日历、自动化日常任务 — 全部通过自然对话完成。
 
-1. **下载**最新可执行文件：[Releases](https://evolink.ai/openclaw)
-2. **运行** — 无需安装
-3. **按照**以下 3 步向导操作
+**OpenClaw Manager 让部署变得极其简单：** 下载、输入两个凭证、点击部署。搞定。
 
 ---
 
-## 引导安装
+## 你需要什么
 
-无需终端。只需复制粘贴凭据。
+只需两样东西：
 
-### 前置条件
+1. **一个 API Key** — 用于 AI 模型（从 [EvoLink](https://evolink.ai) 获取）
+2. **一个通讯渠道** — 目前支持 Telegram 或飞书
 
-开始前需要准备：
+就这些。管理器会处理所有其他事情：下载 OpenClaw、配置服务、连接渠道、验证安装。
 
-| 凭据 | 获取方式 |
-|---|---|
-| **EvoLink API Key** | [EvoLink 控制台](https://evolink.ai) → API Keys |
-| **Telegram Bot Token** | 通过 [@BotFather](https://t.me/BotFather) 创建机器人，复制 Token |
-| **Telegram 用户 ID** | 向 [@userinfobot](https://t.me/userinfobot) 发送 `/start` |
+---
 
-> 💡 也支持飞书（Lark）— 在第 1 步中选择即可。
+## 支持的通讯渠道
 
-### 第 1 步 — 创建实例 *（约 30 秒）*
+| 渠道 | 状态 | 地区 |
+|------|------|------|
+| **Telegram** | ✅ 已支持 | 全球 |
+| **飞书** | ✅ 已支持 | 中国 |
+| WhatsApp | 🔜 即将推出 | — |
+| Discord | 🔜 即将推出 | — |
+| Slack | 🔜 即将推出 | — |
+| 更多... | 🗓️ 计划中 | — |
 
-选择 Claude 模型，然后选择频道（Telegram 或飞书）。
-可以为不同团队或机器人创建多个实例。
+我们正在积极扩展渠道支持。欢迎贡献和提出需求。
 
-### 第 2 步 — 输入凭据
+---
 
-粘贴 EvoLink API Key 和频道凭据。
-向导会在继续前验证每个字段。
+## 安装指南
 
-### 第 3 步 — 部署并验证
+三步完成，不到 5 分钟。
 
-点击 **Deploy**。通过 SSE 实时推送部署进度。
-完成后发送测试消息确认一切正常。
+### 准备工作
+
+| 需要什么 | 在哪获取 |
+|---------|---------|
+| **EvoLink API Key** | [evolink.ai](https://evolink.ai) → 控制台 → API Keys |
+| **Telegram Bot Token** | 通过 [@BotFather](https://t.me/BotFather) 创建 |
+| **Telegram 用户 ID** | 给 [@userinfobot](https://t.me/userinfobot) 发送 `/start` |
+
+> 💡 飞书用户：在第一步中选择飞书，按应用内指引获取凭证。
+
+### 第一步 — 创建实例 *（约 30 秒）*
+
+选择 Claude 模型，选择渠道（Telegram 或飞书）。  
+可以创建多个实例，用于不同团队或机器人。
+
+### 第二步 — 输入凭证
+
+粘贴 API Key 和渠道凭证。  
+向导会逐项验证后再继续。
+
+### 第三步 — 部署并验证
+
+点击 **部署**，实时查看进度。  
+发送测试消息确认一切正常。
 
 ---
 
@@ -83,27 +99,37 @@
 
 通过 EvoLink 可用的所有 Claude 模型：
 
-| 模型 | 定位 |
-|---|---|
-| Claude Haiku 4.5 | 快速且经济 |
-| Claude Sonnet 4.5 | 均衡 |
-| Claude Opus 4.5 | 高级 |
-| Claude Opus 4.6 | 最强 |
-
-> 🔥 **限时优惠**：通过 EvoLink 享受 Claude 官方定价约 7 折。
-> 节省金额因使用层级、使用模式和上下文长度而异。[计算您的节省 →](https://evolink.ai/openclaw#pricing)
+| 模型 | 适合场景 |
+|------|---------|
+| Claude Haiku 4.5 | 快速响应，简单任务 |
+| Claude Sonnet 4.5 | 速度与智能兼顾 |
+| Claude Opus 4.5 | 复杂推理 |
+| Claude Opus 4.6 | 最强大，适合长时间运行的代理 |
 
 ---
 
-## 功能
+## 节省 API 费用
 
-- **多实例管理** — 同时运行多个 OpenClaw 配置
-- **模型选择** — Haiku 4.5、Sonnet 4.5、Opus 4.5、Opus 4.6
-- **频道支持** — Telegram 和飞书（Lark）
-- **实时部署** — SSE 流式进度推送
+通过 [EvoLink](https://evolink.ai/openclaw) 使用 Claude，**比官方定价节省约 30%**。
+
+- 相同模型，相同质量
+- 无需修改代码
+- OpenClaw Manager 开箱即用
+
+> 🔥 限时优惠。[计算你的节省 →](https://evolink.ai/openclaw#pricing)
+
+---
+
+## 功能特性
+
+- **一键部署** — 无需终端或 Docker
+- **多实例** — 同时运行多个 OpenClaw 机器人
+- **渠道选择** — Telegram 和飞书，更多即将推出
+- **模型选择** — Haiku、Sonnet、Opus（4.5 和 4.6）
+- **实时进度** — 部署过程 SSE 流式展示
 - **网关控制** — 启动 / 停止 / 状态自动刷新
-- **一键删除** — 清理服务
-- **跨平台** — Windows、macOS、Linux 可执行文件
+- **一键清理** — 不需要时干净删除
+- **跨平台** — Windows、macOS、Linux
 
 ---
 
@@ -129,13 +155,9 @@ npx pkg dist/setup.cjs --targets node22-linux-x64 --output dist/openclaw-manager
 
 ---
 
-## 由 EvoLink 提供支持
+## 由以下提供支持
 
-<a href="https://evolink.ai">
-  <strong>EvoLink</strong>
-</a> — 统一 AI API 网关，40+ 模型，智能路由，更低成本。
-
----
+<a href="https://evolink.ai"><strong>EvoLink</strong></a> — 统一 AI API 网关。40+ 模型，智能路由，更低成本。
 
 ## 许可证
 

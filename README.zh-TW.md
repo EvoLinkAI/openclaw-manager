@@ -1,19 +1,19 @@
-# OpenClaw Manager — 一鍵安裝和管理 OpenClaw
+# OpenClaw Manager
 
 <p align="center">
-  <strong>安裝 OpenClaw 並通過引導嚮導連接 Telegram 或飛書。</strong><br>
-  通過 EvoLink 使用 Claude，節省約 30% 費用 — 秒級估算節省金額。
+  <strong>一鍵本地部署 OpenClaw — 你的個人 AI 代理，運行在你的電腦上。</strong>
 </p>
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">官網</a> •
   <a href="https://evolink.ai/openclaw">下載</a> •
-  <a href="#引導安裝">安裝指南</a> •
+  <a href="#安裝指南">安裝指南</a> •
+  <a href="#支援的通訊渠道">渠道</a> •
   <a href="#模型">模型</a>
 </p>
 
 <p align="center">
-  <strong>🌐 Languages / 語言：</strong>
+  <strong>🌐 Languages：</strong>
   <a href="README.md">English</a> |
   <a href="README.zh-CN.md">简体中文</a> |
   <a href="README.zh-TW.md">繁體中文</a> |
@@ -28,86 +28,112 @@
 
 ---
 
-## 為什麼選擇 OpenClaw Manager？
+## 什麼是 OpenClaw Manager？
 
-| | |
-|---|---|
-| ✅ **Claude API 約 7 折** | 通過 EvoLink 的官方定價（限時優惠） |
-| ✅ **無需終端** | 複製貼上憑據，點擊部署 |
-| ✅ **端到端驗證** | 啟動前確認頻道正常工作 |
-| ✅ **多實例管理** | 同時運行多個 OpenClaw 機器人 |
-| ✅ **跨平台** | macOS、Windows、Linux |
+**OpenClaw Manager** 是一款桌面應用，讓你一鍵在本地部署 [OpenClaw](https://github.com/openclaw/openclaw)。無需終端、無需 Docker、無需手動編輯設定檔。
 
-## 快速開始
+OpenClaw 是一個 AI 代理框架，將 Claude 驅動的 AI 助手連接到你的通訊工具。它能讀取檔案、瀏覽網頁、執行程式碼、管理行事曆、自動化日常任務 — 全部透過自然對話完成。
 
-1. **下載**最新可執行檔：[Releases](https://evolink.ai/openclaw)
-2. **運行** — 無需安裝
-3. **按照**以下 3 步嚮導操作
+**OpenClaw Manager 讓部署變得極其簡單：** 下載、輸入兩個憑證、點擊部署。搞定。
 
 ---
 
-## 引導安裝
+## 你需要什麼
 
-無需終端。只需複製貼上憑據。
+只需兩樣東西：
 
-### 前置條件
+1. **一個 API Key** — 用於 AI 模型（從 [EvoLink](https://evolink.ai) 取得）
+2. **一個通訊渠道** — 目前支援 Telegram 或飛書
 
-開始前需要準備：
+就這些。管理器會處理所有其他事情：下載 OpenClaw、配置服務、連接渠道、驗證安裝。
 
-| 憑據 | 獲取方式 |
-|---|---|
-| **EvoLink API Key** | [EvoLink 控制台](https://evolink.ai) → API Keys |
-| **Telegram Bot Token** | 通過 [@BotFather](https://t.me/BotFather) 創建機器人，複製 Token |
-| **Telegram 用戶 ID** | 向 [@userinfobot](https://t.me/userinfobot) 發送 `/start` |
+---
 
-> 💡 也支持飛書（Lark）— 在第 1 步中選擇即可。
+## 支援的通訊渠道
 
-### 第 1 步 — 創建實例 *（約 30 秒）*
+| 渠道 | 狀態 | 地區 |
+|------|------|------|
+| **Telegram** | ✅ 已支援 | 全球 |
+| **飛書** | ✅ 已支援 | 中國 |
+| WhatsApp | 🔜 即將推出 | — |
+| Discord | 🔜 即將推出 | — |
+| Slack | 🔜 即將推出 | — |
+| 更多... | 🗓️ 計劃中 | — |
 
-選擇 Claude 模型，然後選擇頻道（Telegram 或飛書）。
-可以為不同團隊或機器人創建多個實例。
+我們正在積極擴展渠道支援。歡迎貢獻和提出需求。
 
-### 第 2 步 — 輸入憑據
+---
 
-貼上 EvoLink API Key 和頻道憑據。
-嚮導會在繼續前驗證每個欄位。
+## 安裝指南
 
-### 第 3 步 — 部署並驗證
+三步完成，不到 5 分鐘。
 
-點擊 **Deploy**。通過 SSE 即時推送部署進度。
-完成後發送測試訊息確認一切正常。
+### 準備工作
+
+| 需要什麼 | 在哪取得 |
+|---------|---------|
+| **EvoLink API Key** | [evolink.ai](https://evolink.ai) → 控制台 → API Keys |
+| **Telegram Bot Token** | 透過 [@BotFather](https://t.me/BotFather) 建立 |
+| **Telegram 使用者 ID** | 給 [@userinfobot](https://t.me/userinfobot) 傳送 `/start` |
+
+> 💡 飛書使用者：在第一步中選擇飛書，按應用內指引取得憑證。
+
+### 第一步 — 建立實例 *（約 30 秒）*
+
+選擇 Claude 模型，選擇渠道（Telegram 或飛書）。  
+可以建立多個實例，用於不同團隊或機器人。
+
+### 第二步 — 輸入憑證
+
+貼上 API Key 和渠道憑證。  
+精靈會逐項驗證後再繼續。
+
+### 第三步 — 部署並驗證
+
+點擊 **部署**，即時查看進度。  
+傳送測試訊息確認一切正常。
 
 ---
 
 ## 模型
 
-通過 EvoLink 可用的所有 Claude 模型：
+透過 EvoLink 可用的所有 Claude 模型：
 
-| 模型 | 定位 |
-|---|---|
-| Claude Haiku 4.5 | 快速且經濟 |
-| Claude Sonnet 4.5 | 均衡 |
-| Claude Opus 4.5 | 高級 |
-| Claude Opus 4.6 | 最強 |
-
-> 🔥 **限時優惠**：通過 EvoLink 享受 Claude 官方定價約 7 折。
-> 節省金額因使用層級、使用模式和上下文長度而異。[計算您的節省 →](https://evolink.ai/openclaw#pricing)
+| 模型 | 適合場景 |
+|------|---------|
+| Claude Haiku 4.5 | 快速回應，簡單任務 |
+| Claude Sonnet 4.5 | 速度與智慧兼顧 |
+| Claude Opus 4.5 | 複雜推理 |
+| Claude Opus 4.6 | 最強大，適合長時間運行的代理 |
 
 ---
 
-## 功能
+## 節省 API 費用
 
-- **多實例管理** — 同時運行多個 OpenClaw 配置
-- **模型選擇** — Haiku 4.5、Sonnet 4.5、Opus 4.5、Opus 4.6
-- **頻道支持** — Telegram 和飛書（Lark）
-- **即時部署** — SSE 串流進度推送
+透過 [EvoLink](https://evolink.ai/openclaw) 使用 Claude，**比官方定價節省約 30%**。
+
+- 相同模型，相同品質
+- 無需修改程式碼
+- OpenClaw Manager 開箱即用
+
+> 🔥 限時優惠。[計算你的節省 →](https://evolink.ai/openclaw#pricing)
+
+---
+
+## 功能特性
+
+- **一鍵部署** — 無需終端或 Docker
+- **多實例** — 同時運行多個 OpenClaw 機器人
+- **渠道選擇** — Telegram 和飛書，更多即將推出
+- **模型選擇** — Haiku、Sonnet、Opus（4.5 和 4.6）
+- **即時進度** — 部署過程 SSE 串流展示
 - **閘道控制** — 啟動 / 停止 / 狀態自動重新整理
-- **一鍵刪除** — 清理服務
-- **跨平台** — Windows、macOS、Linux 可執行檔
+- **一鍵清理** — 不需要時乾淨刪除
+- **跨平台** — Windows、macOS、Linux
 
 ---
 
-## 從原始碼構建
+## 從原始碼建構
 
 ```bash
 npm install
@@ -129,13 +155,9 @@ npx pkg dist/setup.cjs --targets node22-linux-x64 --output dist/openclaw-manager
 
 ---
 
-## 由 EvoLink 提供支持
+## 由以下提供支持
 
-<a href="https://evolink.ai">
-  <strong>EvoLink</strong>
-</a> — 統一 AI API 閘道，40+ 模型，智能路由，更低成本。
-
----
+<a href="https://evolink.ai"><strong>EvoLink</strong></a> — 統一 AI API 閘道。40+ 模型，智慧路由，更低成本。
 
 ## 授權條款
 
