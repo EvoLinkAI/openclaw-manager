@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">官网</a> •
-  <a href="https://github.com/EvoLinkAI/openclaw-manager/releases">下载</a> •
+  <a href="https://evolink.ai/openclaw">下载</a> •
   <a href="#引导安装">安装指南</a> •
   <a href="#模型">模型</a>
 </p>
@@ -40,7 +40,7 @@
 
 ## 快速开始
 
-1. **下载**最新可执行文件：[Releases](https://github.com/EvoLinkAI/openclaw-manager/releases)
+1. **下载**最新可执行文件：[Releases](https://evolink.ai/openclaw)
 2. **运行** — 无需安装
 3. **按照**以下 3 步向导操作
 

@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">웹사이트</a> •
-  <a href="https://github.com/EvoLinkAI/openclaw-manager/releases">다운로드</a> •
+  <a href="https://evolink.ai/openclaw">다운로드</a> •
   <a href="#가이드-설치">설치 가이드</a> •
   <a href="#모델">모델</a>
 </p>
@@ -40,7 +40,7 @@
 
 ## 빠른 시작
 
-1. 최신 실행 파일 **다운로드**: [Releases](https://github.com/EvoLinkAI/openclaw-manager/releases)
+1. 최신 실행 파일 **다운로드**: [Releases](https://evolink.ai/openclaw)
 2. **실행** — 설치 불필요
 3. 아래 3단계 위저드 **따르기**
 

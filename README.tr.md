@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">Web sitesi</a> •
-  <a href="https://github.com/EvoLinkAI/openclaw-manager/releases">İndirmeler</a> •
+  <a href="https://evolink.ai/openclaw">İndirmeler</a> •
   <a href="#rehberli-kurulum">Kurulum Rehberi</a> •
   <a href="#modeller">Modeller</a>
 </p>
@@ -40,7 +40,7 @@
 
 ## Hızlı Başlangıç
 
-1. En son çalıştırılabilir dosyayı **indirin**: [Releases](https://github.com/EvoLinkAI/openclaw-manager/releases)
+1. En son çalıştırılabilir dosyayı **indirin**: [Releases](https://evolink.ai/openclaw)
 2. **Çalıştırın** — kurulum gereksiz
 3. Aşağıdaki 3 adımlı sihirbazı **takip edin**
 

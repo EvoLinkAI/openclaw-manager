@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">Sito web</a> •
-  <a href="https://github.com/EvoLinkAI/openclaw-manager/releases">Download</a> •
+  <a href="https://evolink.ai/openclaw">Download</a> •
   <a href="#installazione-guidata">Guida all'installazione</a> •
   <a href="#modelli">Modelli</a>
 </p>
@@ -40,7 +40,7 @@
 
 ## Avvio rapido
 
-1. **Scarica** l'eseguibile più recente: [Releases](https://github.com/EvoLinkAI/openclaw-manager/releases)
+1. **Scarica** l'eseguibile più recente: [Releases](https://evolink.ai/openclaw)
 2. **Esegui** — nessuna installazione necessaria
 3. **Segui** la procedura guidata in 3 passaggi
 

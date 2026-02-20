@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">Site web</a> •
-  <a href="https://github.com/EvoLinkAI/openclaw-manager/releases">Téléchargements</a> •
+  <a href="https://evolink.ai/openclaw">Téléchargements</a> •
   <a href="#installation-guidée">Guide d'installation</a> •
   <a href="#modèles">Modèles</a>
 </p>
@@ -40,7 +40,7 @@
 
 ## Démarrage rapide
 
-1. **Téléchargez** le dernier exécutable : [Releases](https://github.com/EvoLinkAI/openclaw-manager/releases)
+1. **Téléchargez** le dernier exécutable : [Releases](https://evolink.ai/openclaw)
 2. **Lancez** — aucune installation nécessaire
 3. **Suivez** l'assistant en 3 étapes
 

@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">Website</a> •
-  <a href="https://github.com/EvoLinkAI/openclaw-manager/releases">Downloads</a> •
+  <a href="https://evolink.ai/openclaw">Downloads</a> •
   <a href="#guided-setup">Setup Guide</a> •
   <a href="#models">Models</a>
 </p>
@@ -40,7 +40,7 @@
 
 ## Quick Start
 
-1. **Download** the latest executable from [Releases](https://github.com/EvoLinkAI/openclaw-manager/releases)
+1. **Download** the latest executable from [Releases](https://evolink.ai/openclaw)
 2. **Run** it — no installation required
 3. **Follow** the 3-step wizard below
 

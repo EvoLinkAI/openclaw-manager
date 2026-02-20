@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://evolink.ai/openclaw">ウェブサイト</a> •
-  <a href="https://github.com/EvoLinkAI/openclaw-manager/releases">ダウンロード</a> •
+  <a href="https://evolink.ai/openclaw">ダウンロード</a> •
   <a href="#ガイド付きセットアップ">セットアップガイド</a> •
   <a href="#モデル">モデル</a>
 </p>
@@ -40,7 +40,7 @@
 
 ## クイックスタート
 
-1. 最新の実行ファイルを**ダウンロード**：[Releases](https://github.com/EvoLinkAI/openclaw-manager/releases)
+1. 最新の実行ファイルを**ダウンロード**：[Releases](https://evolink.ai/openclaw)
 2. **実行** — インストール不要
 3. 以下の 3 ステップウィザードに**従う**
 
