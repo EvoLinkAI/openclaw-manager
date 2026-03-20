@@ -72,7 +72,7 @@ Kanal desteğini aktif olarak genişletiyoruz. Katkılar ve istekler hoş geldin
 
 | Ne | Nereden Alınır |
 |----|---------------|
-| **EvoLink API Anahtarı** | [evolink.ai](https://evolink.ai) → Panel → API Keys |
+| **EvoLink API Anahtarı** | [evolink.ai](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager) → Panel → API Keys |
 | **Telegram Bot Token** | [@BotFather](https://t.me/BotFather) ile oluşturun |
 | **Telegram Kullanıcı ID** | [@userinfobot](https://t.me/userinfobot)'a `/start` gönderin |
 
@@ -157,7 +157,7 @@ npx pkg dist/setup.cjs --targets node22-linux-x64 --output dist/openclaw-manager
 
 ## Powered by
 
-<a href="https://evolink.ai"><strong>EvoLink</strong></a> — Birleşik AI API gateway'i. 40+ model, akıllı yönlendirme, düşük maliyet.
+<a href="https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager"><strong>EvoLink</strong></a> — Birleşik AI API gateway'i. 40+ model, akıllı yönlendirme, düşük maliyet.
 
 ## Lisans
 
