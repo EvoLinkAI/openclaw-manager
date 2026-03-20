@@ -72,7 +72,7 @@ Kanal desteğini aktif olarak genişletiyoruz. Katkılar ve istekler hoş geldin
 
 | Ne | Nereden Alınır |
 |----|---------------|
-| **EvoLink API Anahtarı** | [evolink.ai](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager) → Panel → API Keys |
+| **EvoLink API Anahtarı** | [evolink.ai](https://evolink.ai/signup?utm_source=github[evolink.ai](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_medium=readme[evolink.ai](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_campaign=openclaw-manager) → Panel → API Keys |
 | **Telegram Bot Token** | [@BotFather](https://t.me/BotFather) ile oluşturun |
 | **Telegram Kullanıcı ID** | [@userinfobot](https://t.me/userinfobot)'a `/start` gönderin |
 

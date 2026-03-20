@@ -72,7 +72,7 @@ OpenClaw는 Claude 기반 AI 어시스턴트를 메시징 앱에 연결하는 AI
 
 | 필요한 것 | 받는 방법 |
 |----------|----------|
-| **EvoLink API 키** | [evolink.ai](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager) → 대시보드 → API Keys |
+| **EvoLink API 키** | [evolink.ai](https://evolink.ai/signup?utm_source=github[evolink.ai](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_medium=readme[evolink.ai](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_campaign=openclaw-manager) → 대시보드 → API Keys |
 | **Telegram 봇 토큰** | [@BotFather](https://t.me/BotFather)에서 생성 |
 | **Telegram 사용자 ID** | [@userinfobot](https://t.me/userinfobot)에 `/start` 전송 |
 
