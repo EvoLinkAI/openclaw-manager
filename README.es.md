@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="https://evolink.ai/openclaw">Sitio Web</a> •
-  <a href="https://evolink.ai/openclaw">Descargar</a> •
+  <a href="https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager">Sitio Web</a> •
+  <a href="https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager">Descargar</a> •
   <a href="#guía-de-instalación">Guía</a> •
   <a href="#canales-soportados">Canales</a> •
   <a href="#modelos">Modelos</a>
@@ -42,7 +42,7 @@ OpenClaw es un framework de agentes de IA que conecta un asistente impulsado por
 
 Solo dos cosas:
 
-1. **Una API key** — para el modelo de IA (obtén una en [EvoLink](https://evolink.ai))
+1. **Una API key** — para el modelo de IA (obtén una en [EvoLink](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager))
 2. **Un canal de mensajería** — actualmente Telegram o Feishu
 
 Eso es todo. El manager se encarga del resto: descargar OpenClaw, configurar el servicio, conectar tu canal y verificar la instalación.
@@ -110,13 +110,13 @@ Todos los modelos Claude disponibles vía EvoLink:
 
 ## Ahorra en Costos de API
 
-Usa Claude a través de [EvoLink](https://evolink.ai/openclaw) y paga **~30% menos** que el precio oficial.
+Usa Claude a través de [EvoLink](https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager) y paga **~30% menos** que el precio oficial.
 
 - Mismos modelos, misma calidad
 - Sin cambios de código
 - Funciona directamente con OpenClaw Manager
 
-> 🔥 Oferta por tiempo limitado. [Calcula tu ahorro →](https://evolink.ai/openclaw#pricing)
+> 🔥 Oferta por tiempo limitado. [Calcula tu ahorro →](https://evolink.ai/openclaw#pricing?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)
 
 ---
 
