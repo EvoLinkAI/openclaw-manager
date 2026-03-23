@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="https://evolink.ai/openclaw">웹사이트</a> •
-  <a href="https://evolink.ai/openclaw">다운로드</a> •
+  <a href="https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager">웹사이트</a> •
+  <a href="https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager">다운로드</a> •
   <a href="#설정-가이드">가이드</a> •
   <a href="#지원-채널">채널</a> •
   <a href="#모델">모델</a>
@@ -42,7 +42,7 @@ OpenClaw는 Claude 기반 AI 어시스턴트를 메시징 앱에 연결하는 AI
 
 두 가지만:
 
-1. **API 키** — AI 모델용 ([EvoLink](https://evolink.ai)에서 발급)
+1. **API 키** — AI 모델용 ([EvoLink](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)에서 발급)
 2. **메시징 채널** — 현재 Telegram 또는 Feishu 지원
 
 그게 전부입니다. 매니저가 나머지를 모두 처리합니다: OpenClaw 다운로드, 서비스 설정, 채널 연결, 설치 검증.
@@ -110,13 +110,13 @@ EvoLink를 통해 사용 가능한 모든 Claude 모델:
 
 ## API 비용 절약
 
-[EvoLink](https://evolink.ai/openclaw)를 통해 Claude를 사용하면 **공식 가격보다 ~30% 절약**.
+[EvoLink](https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)를 통해 Claude를 사용하면 **공식 가격보다 ~30% 절약**.
 
 - 같은 모델, 같은 품질
 - 코드 변경 불필요
 - OpenClaw Manager에서 바로 사용 가능
 
-> 🔥 기간 한정 혜택. [절약 금액 계산 →](https://evolink.ai/openclaw#pricing)
+> 🔥 기간 한정 혜택. [절약 금액 계산 →](https://evolink.ai/openclaw#pricing?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)
 
 ---
 
