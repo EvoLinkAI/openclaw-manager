@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="https://evolink.ai/openclaw">Web Sitesi</a> •
-  <a href="https://evolink.ai/openclaw">İndir</a> •
+  <a href="https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager">Web Sitesi</a> •
+  <a href="https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager">İndir</a> •
   <a href="#kurulum-kılavuzu">Kılavuz</a> •
   <a href="#desteklenen-kanallar">Kanallar</a> •
   <a href="#modeller">Modeller</a>
@@ -42,7 +42,7 @@ OpenClaw, Claude destekli bir AI asistanı mesajlaşma uygulamalarınıza bağla
 
 Sadece iki şey:
 
-1. **Bir API anahtarı** — AI modeli için ([EvoLink](https://evolink.ai)'ten alın)
+1. **Bir API anahtarı** — AI modeli için ([EvoLink](https://evolink.ai?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)'ten alın)
 2. **Bir mesajlaşma kanalı** — şu anda Telegram veya Feishu
 
 Hepsi bu. Yönetici geri kalanını halleder: OpenClaw indirme, servis yapılandırma, kanal bağlama ve kurulum doğrulama.
@@ -110,13 +110,13 @@ EvoLink üzerinden kullanılabilen tüm Claude modelleri:
 
 ## API Maliyetlerinden Tasarruf
 
-Claude'u [EvoLink](https://evolink.ai/openclaw) üzerinden kullanın ve **resmi fiyatlandırmadan ~%30 daha az** ödeyin.
+Claude'u [EvoLink](https://evolink.ai/openclaw?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager) üzerinden kullanın ve **resmi fiyatlandırmadan ~%30 daha az** ödeyin.
 
 - Aynı modeller, aynı kalite
 - Kod değişikliği gerekmez
 - OpenClaw Manager ile hazır çalışır
 
-> 🔥 Sınırlı süreli teklif. [Tasarrufunuzu hesaplayın →](https://evolink.ai/openclaw#pricing)
+> 🔥 Sınırlı süreli teklif. [Tasarrufunuzu hesaplayın →](https://evolink.ai/openclaw#pricing?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)
 
 ---
 
