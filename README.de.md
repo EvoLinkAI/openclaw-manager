@@ -72,7 +72,7 @@ Drei Schritte. Unter 5 Minuten.
 
 | Was | Wo Erhältlich |
 |-----|--------------|
-| **EvoLink API-Schlüssel** | [evolink.ai](https://evolink.ai/signup?utm_source=github[evolink.ai](https://evolink.ai/signup?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_medium=readme[evolink.ai](https://evolink.ai/signup?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_campaign=openclaw-manager) → Dashboard → API Keys |
+| **EvoLink API-Schlüssel** | [evolink.ai](https://evolink.ai/signup?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_medium=readme[evolink.ai](https://evolink.ai/signup?utm_source=github&utm_medium=readme&utm_campaign=openclaw-manager)utm_campaign=openclaw-manager) → Dashboard → API Keys |
 | **Telegram Bot Token** | Erstelle via [@BotFather](https://t.me/BotFather) |
 | **Telegram Benutzer-ID** | Sende `/start` an [@userinfobot](https://t.me/userinfobot) |
 
